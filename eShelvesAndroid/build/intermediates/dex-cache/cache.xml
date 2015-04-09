@@ -2,39 +2,46 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\anton_000\AndroidStudioProjects\eShelves\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
+        jar="C:\Users\anton_000\AndroidStudioProjects\eShelvesAndroid\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="C:\Users\anton_000\AndroidStudioProjects\eShelves\app\build\intermediates\pre-dexed\debug\classes-dad510c14d2a768bf103c8b6d9126619e0ba741d.jar" />
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="C:\Users\anton_000\AndroidStudioProjects\eShelvesAndroid\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-fbee666293d2d5fdea8ea20b0d252d8e7245efd0.jar" />
     </item>
     <item
-        jar="C:\Users\anton_000\AndroidStudioProjects\eShelves\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\classes.jar"
+        jar="C:\Users\anton_000\AndroidStudioProjects\eShelvesAndroid\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="d84409890828e07d344a3b9b1da545dba9897b51">
-        <dex dex="C:\Users\anton_000\AndroidStudioProjects\eShelves\app\build\intermediates\pre-dexed\debug\classes-3a16415acc1de68628076a8c198ad396e8ed80d6.jar" />
+        <dex dex="C:\Users\anton_000\AndroidStudioProjects\eShelvesAndroid\app\build\intermediates\pre-dexed\debug\classes-59e6f473769efc72733d4dcb664bc66b36b911cb.jar" />
     </item>
     <item
         jar="C:\Users\anton_000\.gradle\caches\modules-2\files-2.1\com.mcxiaoke.volley\library\1.0.15\9093a362d18c5f81f58e49d86dece57d9b6e1cb7\library-1.0.15.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="9093a362d18c5f81f58e49d86dece57d9b6e1cb7">
-        <dex dex="C:\Users\anton_000\AndroidStudioProjects\eShelves\app\build\intermediates\pre-dexed\debug\library-1.0.15-bfa1fd9b227500fea238409b44db72cf68cbe7fd.jar" />
+        <dex dex="C:\Users\anton_000\AndroidStudioProjects\eShelvesAndroid\app\build\intermediates\pre-dexed\debug\library-1.0.15-bfa1fd9b227500fea238409b44db72cf68cbe7fd.jar" />
+    </item>
+    <item
+        jar="C:\Users\anton_000\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="C:\Users\anton_000\AndroidStudioProjects\eShelvesAndroid\app\build\intermediates\pre-dexed\debug\gson-2.3.1-f54892444cd5837e6a7ee33397922fc1126fbed3.jar" />
     </item>
     <item
         jar="C:\Users\anton_000\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
-        <dex dex="C:\Users\anton_000\AndroidStudioProjects\eShelves\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-62fdad0f912174604fa3805360bf2542eda4b128.jar" />
+        <dex dex="C:\Users\anton_000\AndroidStudioProjects\eShelvesAndroid\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-62fdad0f912174604fa3805360bf2542eda4b128.jar" />
     </item>
     <item
-        jar="C:\Users\anton_000\AndroidStudioProjects\eShelves\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
+        jar="C:\Users\anton_000\AndroidStudioProjects\eShelvesAndroid\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
-        <dex dex="C:\Users\anton_000\AndroidStudioProjects\eShelves\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-11c4915ed1da12a2413f8c921cbdbf2abf4e63a9.jar" />
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="C:\Users\anton_000\AndroidStudioProjects\eShelvesAndroid\app\build\intermediates\pre-dexed\debug\classes-81944cc2bc433f3060f800a8ba9458ba9ac4b7fd.jar" />
     </item>
 
 </items>
