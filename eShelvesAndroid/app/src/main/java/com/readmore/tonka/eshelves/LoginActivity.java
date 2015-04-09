@@ -43,7 +43,7 @@ public class LoginActivity extends ActionBarActivity {
     public void Login(View view){
         v.setText("ja klikno batn");
 
-        RequestQueue rq = Volley.newRequestQueue(this);
+        RequestQueue rq = Volley.newRequestQueue(context);
         String url = "http://192.168.0.102:50753/api/test";
         String urlParametri = url + "?username=" + txtUsername.getText() + "&password=" + txtPassword.getText();
 
@@ -51,9 +51,15 @@ public class LoginActivity extends ActionBarActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        v.setText(response);
-                        Intent intent = new Intent(getBaseContext(), GlavniAktivity.class);
-                        startActivity(intent);
+                        if(!response.contains("null")){
+                            v.setText(response);
+                            Intent intent = new Intent(context, GlavniAktivity.class);
+                            intent.putExtra("korisnik", response);
+                            startActivity(intent);
+                        }
+                        else{
+                            v.setText("pogresan username ili password");
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -64,30 +70,4 @@ public class LoginActivity extends ActionBarActivity {
 
         rq.add(r);
     }
-/*
-    private void do_btnLogin_click()
-    {
-        MyVolley.get(this, AutentifikacijaProvjeraVM.class, new Response.Listener<AutentifikacijaProvjeraVM>() {
-                    @Override
-                    public void onResponse(AutentifikacijaProvjeraVM response) {
-                        Sesija.logiraniKorisnik = response;
-                        if (response == null)
-                            Toast.makeText(context, "Pogrešan username ili password", Toast.LENGTH_LONG).show();
-                        else {
-                            if (response.StudiranjeInfo != null) {
-                                Sesija.odabraniStudij = response.StudiranjeInfo.get(0);
-                                Intent intent = new Intent(context, OdabirStudijaActivity.class);
-                                startActivity(intent);
-                            }
-                            if (response.ZaposlenjaInfo != null && response.ZaposlenjaInfo.size() > 0) {
-                                Toast.makeText(context, "Opcije za zaposlenika nisu implementirano ", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    }
-                }, AutentifikacijaProvjeraVM.url,
-                new BasicNameValuePair("username", txtUsername.getText().toString()),
-                new BasicNameValuePair("password", txtPassword.getText().toString())
-        );
-    }
-    */
 }
