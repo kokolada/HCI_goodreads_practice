@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 
 public class GlavniAktivity extends ActionBarActivity {
@@ -12,6 +13,8 @@ public class GlavniAktivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_glavni_aktivity);
+        TextView t = (TextView)findViewById(R.id.korisnikInfo);
+        t.setText(getIntent().getExtras().getString("korisnik"));
     }
 
 
