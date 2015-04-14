@@ -39,6 +39,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -113,7 +119,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -151,9 +156,17 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="DAL\MojContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Autor.cs" />
+    <Compile Include="Models\Knjiga.cs" />
+    <Compile Include="Models\Korisnik.cs" />
+    <Compile Include="Models\Ocjena.cs" />
+    <Compile Include="Models\Kategorija.cs" />
+    <Compile Include="Models\Polica.cs" />
+    <Compile Include="Models\Prijateljstvo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
