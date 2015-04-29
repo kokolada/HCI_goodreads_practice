@@ -10,48 +10,53 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using eShelvesAPI.DAL;
 using eShelvesAPI.Models;
-using eShelvesAPI.Helpers;
 
 namespace eShelvesAPI.Controllers
 {
-    public class KorisniksController : ApiController
+    public class KnjigasController : ApiController
     {
         private MojContext db = new MojContext();
 
-        // GET: api/Korisniks
-        public IQueryable<Korisnik> GetKorisnics()
+        // GET: api/Knjigas
+        public IQueryable<Knjiga> GetKnjigas()
         {
-            return db.Korisnics;
+            return db.Knjigas;
         }
 
-        // GET: api/Korisniks/5
-        [ResponseType(typeof(Korisnik))]
-        public IHttpActionResult GetKorisnik(int id)
+        // GET: api/Knjigas/5
+        [ResponseType(typeof(Knjiga))]
+        public IHttpActionResult GetKnjiga(int id)
         {
-            Korisnik korisnik = db.Korisnics.Find(id);
-            if (korisnik == null)
+            Knjiga knjiga = db.Knjigas.Find(id);
+            if (knjiga == null)
             {
                 return NotFound();
             }
 
-            return Ok(korisnik);
+            return Ok(knjiga);
         }
 
-        // PUT: api/Korisniks/5
+		[HttpGet]
+		public List<Knjiga> GetKnjigasByShelf(int PolicaID)
+		{
+			return db.Policas.Where(x => x.Id == PolicaID).Select(x => x.Knjigas).FirstOrDefault();
+		}
+ 
+        // PUT: api/Knjigas/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutKorisnik(int id, Korisnik korisnik)
+        public IHttpActionResult PutKnjiga(int id, Knjiga knjiga)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != korisnik.Id)
+            if (id != knjiga.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(korisnik).State = EntityState.Modified;
+            db.Entry(knjiga).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +64,7 @@ namespace eShelvesAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!KorisnikExists(id))
+                if (!KnjigaExists(id))
                 {
                     return NotFound();
                 }
@@ -72,35 +77,35 @@ namespace eShelvesAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Korisniks
-        [ResponseType(typeof(Korisnik))]
-        public IHttpActionResult PostKorisnik(Korisnik korisnik)
+        // POST: api/Knjigas
+        [ResponseType(typeof(Knjiga))]
+        public IHttpActionResult PostKnjiga(Knjiga knjiga)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Korisnics.Add(korisnik);
+            db.Knjigas.Add(knjiga);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = korisnik.Id }, korisnik);
+            return CreatedAtRoute("DefaultApi", new { id = knjiga.Id }, knjiga);
         }
 
-        // DELETE: api/Korisniks/5
-        [ResponseType(typeof(Korisnik))]
-        public IHttpActionResult DeleteKorisnik(int id)
+        // DELETE: api/Knjigas/5
+        [ResponseType(typeof(Knjiga))]
+        public IHttpActionResult DeleteKnjiga(int id)
         {
-            Korisnik korisnik = db.Korisnics.Find(id);
-            if (korisnik == null)
+            Knjiga knjiga = db.Knjigas.Find(id);
+            if (knjiga == null)
             {
                 return NotFound();
             }
 
-            db.Korisnics.Remove(korisnik);
+            db.Knjigas.Remove(knjiga);
             db.SaveChanges();
 
-            return Ok(korisnik);
+            return Ok(knjiga);
         }
 
         protected override void Dispose(bool disposing)
@@ -112,9 +117,9 @@ namespace eShelvesAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool KorisnikExists(int id)
+        private bool KnjigaExists(int id)
         {
-            return db.Korisnics.Count(e => e.Id == id) > 0;
+            return db.Knjigas.Count(e => e.Id == id) > 0;
         }
     }
 }

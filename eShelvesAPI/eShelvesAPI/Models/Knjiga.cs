@@ -13,6 +13,9 @@ namespace eShelvesAPI.Models
 		public string ISBN { get; set; }
 		public DateTime Objavljena { get; set; }
 
+		public int AutorId { get; set; }
+		public Autor Autor { get; set; }
+
 		public List<Ocjena> Ocjenas { get; set; }
 		public List<Polica> Policas { get; set; }
 		public List<Kategorija> Kategorijas { get; set; }
