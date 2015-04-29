@@ -10,48 +10,53 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using eShelvesAPI.DAL;
 using eShelvesAPI.Models;
-using eShelvesAPI.Helpers;
 
 namespace eShelvesAPI.Controllers
 {
-    public class KorisniksController : ApiController
+    public class PolicasController : ApiController
     {
         private MojContext db = new MojContext();
 
-        // GET: api/Korisniks
-        public IQueryable<Korisnik> GetKorisnics()
+        // GET: api/Policas
+        public IQueryable<Polica> GetPolicas()
         {
-            return db.Korisnics;
+            return db.Policas;
         }
 
-        // GET: api/Korisniks/5
-        [ResponseType(typeof(Korisnik))]
-        public IHttpActionResult GetKorisnik(int id)
+        // GET: api/Policas/5
+        [ResponseType(typeof(Polica))]
+        public IHttpActionResult GetPolica(int id)
         {
-            Korisnik korisnik = db.Korisnics.Find(id);
-            if (korisnik == null)
+            Polica polica = db.Policas.Find(id);
+            if (polica == null)
             {
                 return NotFound();
             }
 
-            return Ok(korisnik);
+            return Ok(polica);
         }
 
-        // PUT: api/Korisniks/5
+		[HttpGet]
+		public String[] GetPolicaByUserId(int korisnikId)
+		{
+			return db.Policas.Where(x => x.KorisnikID == korisnikId).Select(x => x.Naziv).ToArray();
+		}
+
+        // PUT: api/Policas/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutKorisnik(int id, Korisnik korisnik)
+        public IHttpActionResult PutPolica(int id, Polica polica)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != korisnik.Id)
+            if (id != polica.Id)
             {
                 return BadRequest();
             }
 
-            db.Entry(korisnik).State = EntityState.Modified;
+            db.Entry(polica).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +64,7 @@ namespace eShelvesAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!KorisnikExists(id))
+                if (!PolicaExists(id))
                 {
                     return NotFound();
                 }
@@ -72,35 +77,35 @@ namespace eShelvesAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Korisniks
-        [ResponseType(typeof(Korisnik))]
-        public IHttpActionResult PostKorisnik(Korisnik korisnik)
+        // POST: api/Policas
+        [ResponseType(typeof(Polica))]
+        public IHttpActionResult PostPolica(Polica polica)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Korisnics.Add(korisnik);
+            db.Policas.Add(polica);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = korisnik.Id }, korisnik);
+            return CreatedAtRoute("DefaultApi", new { id = polica.Id }, polica);
         }
 
-        // DELETE: api/Korisniks/5
-        [ResponseType(typeof(Korisnik))]
-        public IHttpActionResult DeleteKorisnik(int id)
+        // DELETE: api/Policas/5
+        [ResponseType(typeof(Polica))]
+        public IHttpActionResult DeletePolica(int id)
         {
-            Korisnik korisnik = db.Korisnics.Find(id);
-            if (korisnik == null)
+            Polica polica = db.Policas.Find(id);
+            if (polica == null)
             {
                 return NotFound();
             }
 
-            db.Korisnics.Remove(korisnik);
+            db.Policas.Remove(polica);
             db.SaveChanges();
 
-            return Ok(korisnik);
+            return Ok(polica);
         }
 
         protected override void Dispose(bool disposing)
@@ -112,9 +117,9 @@ namespace eShelvesAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool KorisnikExists(int id)
+        private bool PolicaExists(int id)
         {
-            return db.Korisnics.Count(e => e.Id == id) > 0;
+            return db.Policas.Count(e => e.Id == id) > 0;
         }
     }
 }
