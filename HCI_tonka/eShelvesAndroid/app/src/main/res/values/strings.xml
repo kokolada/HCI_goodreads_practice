@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">eShelves</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="title_activity_glavni_aktivity">GlavniAktivity</string>
-</resources>
