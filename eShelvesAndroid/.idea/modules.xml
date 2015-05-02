@@ -3,8 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/eShelvesNavDrawer.iml" filepath="$PROJECT_DIR$/eShelvesNavDrawer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eShelvesAndroid.iml" filepath="$PROJECT_DIR$/eShelvesAndroid.iml" />
     </modules>
   </component>
 </project>
-
