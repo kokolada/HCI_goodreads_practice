@@ -13,113 +13,113 @@ using eShelvesAPI.Models;
 
 namespace eShelvesAPI.Controllers
 {
-    public class PolicasController : ApiController
-    {
-        private MojContext db = new MojContext();
+	public class PolicasController : ApiController
+	{
+		private MojContext db = new MojContext();
 
-        // GET: api/Policas
-        public IQueryable<Polica> GetPolicas()
-        {
-            return db.Policas;
-        }
-
-        // GET: api/Policas/5
-        [ResponseType(typeof(Polica))]
-        public IHttpActionResult GetPolica(int id)
-        {
-            Polica polica = db.Policas.Find(id);
-            if (polica == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(polica);
-        }
-
-		[HttpGet]
-		public String[] GetPolicaByUserId(int korisnikId)
+		// GET: api/Policas
+		public IQueryable<Polica> GetPolicas()
 		{
-			return db.Policas.Where(x => x.KorisnikID == korisnikId).Select(x => x.Naziv).ToArray();
+			return db.Policas;
 		}
 
-        // PUT: api/Policas/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutPolica(int id, Polica polica)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+		// GET: api/Policas/5
+		[ResponseType(typeof(Polica))]
+		public IHttpActionResult GetPolica(int id)
+		{
+			Polica polica = db.Policas.Find(id);
+			if (polica == null)
+			{
+				return NotFound();
+			}
 
-            if (id != polica.Id)
-            {
-                return BadRequest();
-            }
+			return Ok(polica);
+		}
 
-            db.Entry(polica).State = EntityState.Modified;
+		[HttpGet]
+		public List<Polica> GetPolicaByUserId(int korisnikId)
+		{
+			return db.Policas.Where(x => x.KorisnikID == korisnikId).ToList();
+		}
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PolicaExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+		// PUT: api/Policas/5
+		[ResponseType(typeof(void))]
+		public IHttpActionResult PutPolica(int id, Polica polica)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+			if (id != polica.Id)
+			{
+				return BadRequest();
+			}
 
-        // POST: api/Policas
-        [ResponseType(typeof(Polica))]
-        public IHttpActionResult PostPolica(Polica polica)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+			db.Entry(polica).State = EntityState.Modified;
 
-            db.Policas.Add(polica);
-            db.SaveChanges();
+			try
+			{
+				db.SaveChanges();
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!PolicaExists(id))
+				{
+					return NotFound();
+				}
+				else
+				{
+					throw;
+				}
+			}
 
-            return CreatedAtRoute("DefaultApi", new { id = polica.Id }, polica);
-        }
+			return StatusCode(HttpStatusCode.NoContent);
+		}
 
-        // DELETE: api/Policas/5
-        [ResponseType(typeof(Polica))]
-        public IHttpActionResult DeletePolica(int id)
-        {
-            Polica polica = db.Policas.Find(id);
-            if (polica == null)
-            {
-                return NotFound();
-            }
+		// POST: api/Policas
+		[ResponseType(typeof(Polica))]
+		public IHttpActionResult PostPolica(Polica polica)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 
-            db.Policas.Remove(polica);
-            db.SaveChanges();
+			db.Policas.Add(polica);
+			db.SaveChanges();
 
-            return Ok(polica);
-        }
+			return CreatedAtRoute("DefaultApi", new { id = polica.Id }, polica);
+		}
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		// DELETE: api/Policas/5
+		[ResponseType(typeof(Polica))]
+		public IHttpActionResult DeletePolica(int id)
+		{
+			Polica polica = db.Policas.Find(id);
+			if (polica == null)
+			{
+				return NotFound();
+			}
 
-        private bool PolicaExists(int id)
-        {
-            return db.Policas.Count(e => e.Id == id) > 0;
-        }
-    }
+			db.Policas.Remove(polica);
+			db.SaveChanges();
+
+			return Ok(polica);
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				db.Dispose();
+			}
+			base.Dispose(disposing);
+		}
+
+		private bool PolicaExists(int id)
+		{
+			return db.Policas.Count(e => e.Id == id) > 0;
+		}
+	}
 }

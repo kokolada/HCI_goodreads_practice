@@ -21,23 +21,42 @@ namespace eShelvesAPI.Controllers
 
 		}*/
 		MojContext ctx = new MojContext();
-		public Korisnik Get(string username, string password)
+		public LogiraniKorisnik Get(string username, string password)
 		{
-			if (username == "dzemo" && password == "gigant")
-			{
-				ctx.Korisnics.ToList();
-				return new Korisnik
+			LogiraniKorisnik k = ctx.Korisnics.Where(x => x.username == username)
+				.Where(y => y.password == password).Select(x => new LogiraniKorisnik
 				{
-					Id = 1,
-					Ime = "Dzemo",
-					Prezime = "Gigant",
+					Id = x.Id,
+					Ime = x.Ime,
+					Prezime = x.Prezime,
 					username = username,
-					password = password
-				};
-			}
+					password = password,
+					Email = x.Email,
+					Policas = x.Policas.Where(t => t.KorisnikID == x.Id).Select(p => new eShelvesAPI.Controllers.LogiraniKorisnik.Police {
+						Id = p.Id,
+						Naziv = p.Naziv
+					}).ToList()
+				}).SingleOrDefault();
 
+			return k;
+		}
+	}
 
-			return null;
+	public class LogiraniKorisnik
+	{
+		public int Id { get; set; }
+		public string Ime { get; set; }
+		public string Prezime { get; set; }
+		public string username { get; set; }
+		public string password { get; set; }
+		public string Email { get; set; }
+
+		public List<Police> Policas { get; set; }
+
+		public class Police
+		{
+			public int Id { get; set; }
+			public string Naziv { get; set; }
 		}
 	}
 }
