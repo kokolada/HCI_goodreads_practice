@@ -27,6 +27,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.readmore.tonka.helpers.MyApp;
+import com.readmore.tonka.helpers.Sesija;
+import com.readmore.tonka.models.LogiraniKorisnik;
 
 import org.w3c.dom.Text;
 
@@ -44,7 +47,7 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
 
-    String logiraniKorisnikString = "prazan string";
+    String logiraniKorisnikString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,13 +91,10 @@ public class MainActivity extends ActionBarActivity
                         Gson gson = new Gson();
                         k = gson.fromJson(logiraniKorisnikString, LogiraniKorisnik.class);
                         if(k!=null) {
-                            Toast.makeText(getApplicationContext(), k.Ime, Toast.LENGTH_SHORT).show();
-                            SharedPreferences settings = getSharedPreferences("logpref", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = settings.edit();
-                            editor.putString("logiraniKorisnik", k.username);
-                            editor.putString("ime", k.Ime);
-                            editor.putString("prezime", k.Prezime);
-                            editor.putInt("id", k.Id);
+                            Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                            SharedPreferences sharedPreferences = getSharedPreferences("moja_aplikacija", Context.MODE_PRIVATE);
+                            final SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("logiraniKorisnik", gson.toJson(k));
                             editor.commit();
                             ZamjeniFragment();
                         } else{
@@ -147,8 +147,8 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-
-        if(getSharedPreferences("logpref", MODE_PRIVATE).getString("logiraniKorisnik", "ne").compareTo(" ")==0){
+        SharedPreferences sharedPreferences = getSharedPreferences("moja_aplikacija", Context.MODE_PRIVATE);
+        if(sharedPreferences.getString("logiraniKorisnik", "").compareTo("")==0){
             fragmentManager.beginTransaction()
                     .replace(R.id.container, LoginFragment.newInstance(position + 1))
                     .commit();
@@ -278,11 +278,4 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
-}
-
-class LogiraniKorisnik{
-    public int Id;
-    public String Ime;
-    public String Prezime;
-    public String username;
 }
