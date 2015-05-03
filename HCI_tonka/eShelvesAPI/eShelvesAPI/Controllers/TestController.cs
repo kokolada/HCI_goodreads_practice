@@ -30,12 +30,7 @@ namespace eShelvesAPI.Controllers
 					Ime = x.Ime,
 					Prezime = x.Prezime,
 					username = username,
-					password = password,
 					Email = x.Email,
-					Policas = x.Policas.Where(t => t.KorisnikID == x.Id).Select(p => new eShelvesAPI.Controllers.LogiraniKorisnik.Police {
-						Id = p.Id,
-						Naziv = p.Naziv
-					}).ToList()
 				}).SingleOrDefault();
 
 			return k;
@@ -48,15 +43,8 @@ namespace eShelvesAPI.Controllers
 		public string Ime { get; set; }
 		public string Prezime { get; set; }
 		public string username { get; set; }
-		public string password { get; set; }
 		public string Email { get; set; }
+		public string password { get; set; }
 
-		public List<Police> Policas { get; set; }
-
-		public class Police
-		{
-			public int Id { get; set; }
-			public string Naziv { get; set; }
-		}
 	}
 }
