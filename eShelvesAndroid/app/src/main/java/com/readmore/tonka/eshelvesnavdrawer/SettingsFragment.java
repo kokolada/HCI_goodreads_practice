@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.readmore.tonka.helpers.Sesija;
+import com.readmore.tonka.models.LogiraniKorisnik;
+
 /**
  * Created by anton_000 on 21.4.2015..
  */
@@ -32,9 +35,8 @@ public class SettingsFragment extends Fragment{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.settings_fragment, container, false);
         TextView userInfo = (TextView) rootView.findViewById(R.id.loguserInfo);
-        SharedPreferences settings = getActivity().getSharedPreferences("logpref", Context.MODE_PRIVATE);
-        String test = settings.getString("ime", "ime") + " " + settings.getString("prezime", "prezime") + " " + settings.getString("logiraniKorisnik", "username");
-        userInfo.setText(test);
+        LogiraniKorisnik k = Sesija.getLogiraniKorisnik();
+        userInfo.setText(k.Id + " " + k.Ime + " " + k.Prezime + " " + k.Email + " " + k.username);
         return rootView;
     }
 

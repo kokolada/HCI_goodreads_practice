@@ -66,10 +66,7 @@ public class MainActivity extends ActionBarActivity
 
     public void logout(View v){
         FragmentManager fragmentManager = getSupportFragmentManager();
-        SharedPreferences settings = getSharedPreferences("logpref", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString("logiraniKorisnik", " ");
-        editor.commit();
+        Sesija.setLogiraniKorisnik(null);
         fragmentManager.beginTransaction()
                 .replace(R.id.container, LoginFragment.newInstance(1))
                 .commit();
@@ -91,11 +88,7 @@ public class MainActivity extends ActionBarActivity
                         Gson gson = new Gson();
                         k = gson.fromJson(logiraniKorisnikString, LogiraniKorisnik.class);
                         if(k!=null) {
-                            Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
-                            SharedPreferences sharedPreferences = getSharedPreferences("moja_aplikacija", Context.MODE_PRIVATE);
-                            final SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("logiraniKorisnik", gson.toJson(k));
-                            editor.commit();
+                            Sesija.setLogiraniKorisnik(k);
                             ZamjeniFragment();
                         } else{
                             Toast.makeText(getApplicationContext(), "pogresan username ili password", Toast.LENGTH_SHORT).show();
@@ -147,8 +140,7 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
-        SharedPreferences sharedPreferences = getSharedPreferences("moja_aplikacija", Context.MODE_PRIVATE);
-        if(sharedPreferences.getString("logiraniKorisnik", "").compareTo("")==0){
+        if(Sesija.getLogiraniKorisnik() == null){
             fragmentManager.beginTransaction()
                     .replace(R.id.container, LoginFragment.newInstance(position + 1))
                     .commit();
