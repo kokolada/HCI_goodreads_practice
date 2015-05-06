@@ -17,4 +17,5 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_knjiga_details">KnjigaDetailsActivity</string>
+    <string name="title_activity_friends">FriendsActivity</string>
 </resources>

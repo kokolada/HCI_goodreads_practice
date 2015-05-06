@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/anton_000/AndroidStudioProjects/eShelvesAndroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/ib120133/Desktop/eShelvesAndroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
@@ -127,11 +127,11 @@
     <dimen name="abc_text_size_subtitle_material_toolbar">16dp</dimen>
     <dimen name="abc_text_size_title_material">20sp</dimen>
     <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
-    <!-- From: file:/C:/Users/anton_000/AndroidStudioProjects/eShelvesAndroid/app/src/main/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/ib120133/Desktop/eShelvesAndroid/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!-- From: file:/C:/Users/anton_000/AndroidStudioProjects/eShelvesAndroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/ib120133/Desktop/eShelvesAndroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <item name="dialog_fixed_height_major" type="dimen">80%</item>
     <item name="dialog_fixed_height_minor" type="dimen">100%</item>
@@ -139,10 +139,10 @@
     <item name="dialog_fixed_width_minor" type="dimen">320dp</item>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
-    <!-- From: file:/C:/Users/anton_000/AndroidStudioProjects/eShelvesAndroid/app/src/main/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/ib120133/Desktop/eShelvesAndroid/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="navigation_drawer_width">240dp</dimen>
-    <!-- From: file:/C:/Users/anton_000/AndroidStudioProjects/eShelvesAndroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/ib120133/Desktop/eShelvesAndroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <item name="action_bar_activity_content" type="id"/>
     <item name="action_bar_spinner" type="id"/>
@@ -172,7 +172,7 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/C:/Users/anton_000/AndroidStudioProjects/eShelvesAndroid/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/ib120133/Desktop/eShelvesAndroid/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
@@ -180,6 +180,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="title_activity_friends">FriendsActivity</string>
     <string name="title_activity_knjiga_details">KnjigaDetailsActivity</string>
     <string name="title_activity_polica_details">PolicaDetailsActivity</string>
     <string name="title_section1">Feed</string>
@@ -187,15 +188,15 @@
     <string name="title_section3">My Books</string>
     <string name="title_section4">Recommendations</string>
     <string name="title_section5">Settings</string>
-    <!-- From: file:/C:/Users/anton_000/AndroidStudioProjects/eShelvesAndroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/ib120133/Desktop/eShelvesAndroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Animation.AppCompat.DropDownUp" parent="Base.Animation.AppCompat.DropDownUp"/>
-    <!-- From: file:/C:/Users/anton_000/AndroidStudioProjects/eShelvesAndroid/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/ib120133/Desktop/eShelvesAndroid/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
     </style>
-    <!-- From: file:/C:/Users/anton_000/AndroidStudioProjects/eShelvesAndroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <!-- From: file:/C:/Users/ib120133/Desktop/eShelvesAndroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Base.Animation.AppCompat.DropDownUp" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/abc_grow_fade_in_from_bottom</item>

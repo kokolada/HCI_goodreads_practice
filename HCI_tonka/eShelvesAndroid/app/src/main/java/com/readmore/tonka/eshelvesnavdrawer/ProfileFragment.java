@@ -1,11 +1,29 @@
 package com.readmore.tonka.eshelvesnavdrawer;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.readmore.tonka.adapters.PoliceAdapter;
+import com.readmore.tonka.helpers.MyApp;
+import com.readmore.tonka.helpers.Sesija;
+import com.readmore.tonka.models.Polica;
 
 /**
  * Created by anton_000 on 21.4.2015..
@@ -13,6 +31,7 @@ import android.view.ViewGroup;
 public class ProfileFragment extends Fragment{
 
     private static final String ARG_SECTION_NUMBER = "section_number";
+    ListView lv;
 
     public static ProfileFragment newInstance(int sectionNumber) {
         ProfileFragment fragment = new ProfileFragment();
@@ -28,6 +47,47 @@ public class ProfileFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.profile_fragment, container, false);
+        lv = (ListView)rootView.findViewById(R.id.policeProfilListView);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Polica itemClicked =(Polica)parent.getAdapter().getItem(position);
+                Intent intent = new Intent(getActivity(), PolicaDetailsActivity.class);
+                intent.putExtra("policaID", itemClicked.Id);
+                startActivity(intent);
+            }
+        });
+
+        TextView fptw = (TextView) rootView.findViewById(R.id.friendsProfileTextView);
+        fptw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MyApp.getAppContext(), FriendsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        RequestQueue rq = Volley.newRequestQueue(MyApp.getAppContext());
+        String url ="http://hci111.app.fit.ba/api/policas?korisnikId="+ Sesija.getLogiraniKorisnik().Id;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        Polica[] vrijednosti = gson.fromJson(response, Polica[].class);
+                        ListAdapter adapter = new PoliceAdapter(getActivity(), vrijednosti);
+                        lv.setAdapter(adapter);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        rq.add(stringRequest);
+
         return rootView;
     }
 
