@@ -30,7 +30,7 @@ public class PoliceAdapter extends ArrayAdapter<Polica>{
 
         TextView theTextView = (TextView) view.findViewById(R.id.policaNaziv);
 
-        theTextView.setText(Neki.Naziv);
+        theTextView.setText(Neki.Naziv + "(" + Neki.BookCount + ")");
 
         return view;
     }

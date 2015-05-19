@@ -5,9 +5,19 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.readmore.tonka.eshelvesnavdrawer.R;
+import com.readmore.tonka.helpers.Sesija;
 import com.readmore.tonka.models.Knjiga;
+import com.readmore.tonka.models.LogiraniKorisnik;
 
 public class KnjigaDetailsActivity extends ActionBarActivity {
     TextView BookTitle;
@@ -29,6 +39,27 @@ public class KnjigaDetailsActivity extends ActionBarActivity {
 
         BookTitle.setText(k.Naslov);
         BookDescription.setText(k.Opis);
+
+        final TextView objekat = (TextView)findViewById(R.id.citavobjekat);
+
+        String url = "http://hci111.app.fit.ba/api/Ocjenas?knjigaID=3";
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        objekat.setText(response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "greska", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        queue.add(stringRequest);
     }
 
     @Override

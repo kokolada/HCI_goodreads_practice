@@ -8,4 +8,6 @@ import java.util.List;
 public class Polica {
     public int Id;
     public String Naziv;
+    public int BookCount;
+    public int KorisnikID;
 }

@@ -16,4 +16,11 @@
         android:paddingRight="8dp"
         android:paddingTop="16dp"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addShelfBtn"
+        android:text="Add a new shelf"
+        android:textSize="20sp"/>
+
 </LinearLayout>
