@@ -25,5 +25,10 @@
         android:textSize="25sp"
         android:id="@+id/BookDescription"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/citavobjekat"/>
+
 </LinearLayout>
-<!-- From: file:/C:/Users/ib120133/Desktop/eShelvesAndroid/app/src/main/res/layout/activity_knjiga_details.xml -->
+<!-- From: file:/C:/Users/anton/Documents/AndroidStudioProjects/eShelvesAndroid/app/src/main/res/layout/activity_knjiga_details.xml -->

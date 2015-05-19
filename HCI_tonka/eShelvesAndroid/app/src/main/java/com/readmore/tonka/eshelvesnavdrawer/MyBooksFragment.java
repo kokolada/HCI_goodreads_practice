@@ -1,13 +1,16 @@
 package com.readmore.tonka.eshelvesnavdrawer;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -20,6 +23,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.readmore.tonka.adapters.PoliceAdapter;
+import com.readmore.tonka.dialogs.AddNewShelfDialog;
+import com.readmore.tonka.helpers.Sesija;
 import com.readmore.tonka.models.Polica;
 
 /**
@@ -27,6 +32,8 @@ import com.readmore.tonka.models.Polica;
  */
 public class MyBooksFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
+
+    Button addNewShelf;
 
     public static MyBooksFragment newInstance(int sectionNumber) {
         MyBooksFragment fragment = new MyBooksFragment();
@@ -47,14 +54,18 @@ public class MyBooksFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Polica itemClicked =(Polica)parent.getAdapter().getItem(position);
-                Intent intent = new Intent(getActivity(), PolicaDetailsActivity.class);
-                intent.putExtra("policaID", itemClicked.Id);
-                startActivity(intent);
+                if(itemClicked.BookCount > 0) {
+                    Intent intent = new Intent(getActivity(), PolicaDetailsActivity.class);
+                    intent.putExtra("policaID", itemClicked.Id);
+                    startActivity(intent);
+                } else{
+                    Toast.makeText(getActivity(),"There are no books in this shelf!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String url ="http://hci111.app.fit.ba/api/policas?korisnikId=1";
+        String url ="http://hci111.app.fit.ba/api/policas?korisnikId="+ Sesija.getLogiraniKorisnik().Id;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -71,6 +82,15 @@ public class MyBooksFragment extends Fragment {
             }
         });
         queue.add(stringRequest);
+
+        addNewShelf = (Button) rootView.findViewById(R.id.addShelfBtn);
+        addNewShelf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment dialog = new AddNewShelfDialog();
+                dialog.show(getFragmentManager(), "addshelf");
+            }
+        });
 
         return rootView;
     }
