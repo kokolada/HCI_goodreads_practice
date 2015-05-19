@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace eShelvesAPI.Models
@@ -16,8 +17,8 @@ namespace eShelvesAPI.Models
 		public int AutorId { get; set; }
 		public Autor Autor { get; set; }
 
-		public List<Ocjena> Ocjenas { get; set; }
-		public List<Polica> Policas { get; set; }
+		public List<Ocjena> Ocjenas { get; private set; }
+		public List<Polica> Policas { get; private set; }
 		public List<Kategorija> Kategorijas { get; set; }
 		//slika
 	}

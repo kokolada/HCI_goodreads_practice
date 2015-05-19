@@ -83,17 +83,6 @@ namespace eShelvesAPI.Controllers
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
-        [HttpPost]
-        public PolicaWM PostPolica(PolicaWM polica)
-        {
-            Polica p = new Polica { Naziv = polica.Naziv, KorisnikID = polica.KorisnikID };
-            db.Policas.Add(p);
-            db.SaveChangesAsync();
-            return polica;
-        }
-
-        /*
-
 		// POST: api/Policas
 		[ResponseType(typeof(Polica))]
 		public IHttpActionResult PostPolica(Polica polica)
@@ -107,7 +96,7 @@ namespace eShelvesAPI.Controllers
 			db.SaveChanges();
 
 			return CreatedAtRoute("DefaultApi", new { id = polica.Id }, polica);
-		}*/
+		}
 
 		// DELETE: api/Policas/5
 		[ResponseType(typeof(Polica))]
