@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using eShelvesAPI.DAL;
 using eShelvesAPI.Models;
+using eShelvesAPI.ViewModels;
 
 namespace eShelvesAPI.Controllers
 {
@@ -37,9 +38,14 @@ namespace eShelvesAPI.Controllers
 		}
 
 		[HttpGet]
-		public List<Polica> GetPolicaByUserId(int korisnikId)
+		public List<PolicaWM> GetPolicaByUserId(int korisnikId)
 		{
-			return db.Policas.Where(x => x.KorisnikID == korisnikId).ToList();
+            return db.Policas.Where(x => x.KorisnikID == korisnikId).Select(x => new PolicaWM
+            {
+                Id = x.Id,
+                Naziv = x.Naziv,
+                BookCount = x.Knjigas.Count()
+            }).ToList();
 		}
 
 		// PUT: api/Policas/5
@@ -77,6 +83,17 @@ namespace eShelvesAPI.Controllers
 			return StatusCode(HttpStatusCode.NoContent);
 		}
 
+        [HttpPost]
+        public PolicaWM PostPolica(PolicaWM polica)
+        {
+            Polica p = new Polica { Naziv = polica.Naziv, KorisnikID = polica.KorisnikID };
+            db.Policas.Add(p);
+            db.SaveChangesAsync();
+            return polica;
+        }
+
+        /*
+
 		// POST: api/Policas
 		[ResponseType(typeof(Polica))]
 		public IHttpActionResult PostPolica(Polica polica)
@@ -90,7 +107,7 @@ namespace eShelvesAPI.Controllers
 			db.SaveChanges();
 
 			return CreatedAtRoute("DefaultApi", new { id = polica.Id }, polica);
-		}
+		}*/
 
 		// DELETE: api/Policas/5
 		[ResponseType(typeof(Polica))]

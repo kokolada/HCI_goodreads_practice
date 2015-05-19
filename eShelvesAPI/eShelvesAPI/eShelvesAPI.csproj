@@ -167,6 +167,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\LeRecommender.cs" />
     <Compile Include="Helpers\Various.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Autor.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Models\Polica.cs" />
     <Compile Include="Models\Prijateljstvo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\PolicaWM.cs" />
     <Compile Include="ViewModels\PrijateljVM.cs" />
     <Compile Include="ViewModels\TimeLineVM.cs" />
   </ItemGroup>
