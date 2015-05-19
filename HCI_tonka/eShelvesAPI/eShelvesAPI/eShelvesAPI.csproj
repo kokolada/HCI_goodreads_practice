@@ -159,6 +159,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KnjigasController.cs" />
     <Compile Include="Controllers\KorisniksController.cs" />
+    <Compile Include="Controllers\OcjenasController.cs" />
     <Compile Include="Controllers\PolicasController.cs" />
     <Compile Include="Controllers\PrijateljstvoesController.cs" />
     <Compile Include="Controllers\TestController.cs" />
