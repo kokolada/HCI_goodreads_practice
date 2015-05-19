@@ -10,10 +10,15 @@ namespace eShelvesAPI.ViewModels
 	{
 		class TimeLineItemInfo
 		{
-			public string ImeiPrezime { get; set; }
-			public string NaslovKnjige { get; set; }
-			public string nazivAkcije { get; set; }
-			public string ImeAutora { get; set; }
+            //izvrsena akcija
+            //slika palceholder
+            //naslov knjige
+            //autor
+            //dropdown/button
+            //rating skala
+            //like/comment
+            string akcija = "korisnik ce da sutra podere";
+
 		}
 
 		//public List<TimeLineItemInfo> Itemi { get; set; }
