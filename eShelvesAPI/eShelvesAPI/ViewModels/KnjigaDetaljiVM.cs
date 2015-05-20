@@ -10,7 +10,7 @@ namespace eShelvesAPI.ViewModels
         public string Naslov { get; set; }
         public int AutorID { get; set; }
         public string NazivAutora { get; set; }
-        public double ProsjecnaOcjena { get; set; }
+        public double? ProsjecnaOcjena { get; set; }
         public string ISBN { get; set; }
         public string Opis { get; set; }
 
