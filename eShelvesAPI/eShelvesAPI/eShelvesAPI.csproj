@@ -179,6 +179,7 @@
     <Compile Include="Models\Polica.cs" />
     <Compile Include="Models\Prijateljstvo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\KnjigaDetaljiVM.cs" />
     <Compile Include="ViewModels\PolicaWM.cs" />
     <Compile Include="ViewModels\PrijateljVM.cs" />
     <Compile Include="ViewModels\TimeLineVM.cs" />
