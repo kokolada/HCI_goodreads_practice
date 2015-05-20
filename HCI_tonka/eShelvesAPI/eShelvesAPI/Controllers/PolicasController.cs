@@ -84,8 +84,8 @@ namespace eShelvesAPI.Controllers
 		}
 
 		// POST: api/Policas
-		[ResponseType(typeof(Polica))]
-		public IHttpActionResult PostPolica(Polica polica)
+		/*[ResponseType(typeof(PolicaWM))]
+		public IHttpActionResult PostPolica(PolicaWM polica)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -97,6 +97,18 @@ namespace eShelvesAPI.Controllers
 
 			return CreatedAtRoute("DefaultApi", new { id = polica.Id }, polica);
 		}
+        */
+        public PolicaWM PostPolica(PolicaWM polica)
+        {
+            Polica p = new Polica();
+            p.KorisnikID = polica.KorisnikID;
+            p.Naziv = polica.Naziv;
+
+            db.Policas.Add(p);
+            db.SaveChanges();
+
+            return polica;
+        }
 
 		// DELETE: api/Policas/5
 		[ResponseType(typeof(Polica))]
