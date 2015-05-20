@@ -173,6 +173,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Autor.cs" />
     <Compile Include="Models\Knjiga.cs" />
+    <Compile Include="Models\Komentar.cs" />
     <Compile Include="Models\Korisnik.cs" />
     <Compile Include="Models\Ocjena.cs" />
     <Compile Include="Models\Kategorija.cs" />
