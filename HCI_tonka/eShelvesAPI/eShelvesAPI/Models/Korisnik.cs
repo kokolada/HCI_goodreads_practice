@@ -18,8 +18,8 @@ namespace eShelvesAPI.Models
 		public string Grad { get; set; }
 		public DateTime created_at { get; set; }
 
-		public List<Polica> Policas { get; private set; }
-		public List<Ocjena> Ocjenas { get; private set; }
+		public List<Polica> Policas { get; set; }
+		public List<Ocjena> Ocjenas { get; set; }
 		public List<Prijateljstvo> Prijateljstvos { get; set; }
 		//slika
 	}

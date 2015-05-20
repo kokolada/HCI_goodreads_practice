@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using eShelvesAPI.DAL;
 using eShelvesAPI.Models;
+using eShelvesAPI.ViewModels;
 
 namespace eShelvesAPI.Controllers
 {
@@ -37,9 +38,24 @@ namespace eShelvesAPI.Controllers
         }
 
         [HttpGet]
-        public List<Ocjena> GetOcjeneByKnjiga(int knjigaID)
+        public KnjigaDetaljiVM GetOcjeneByKnjiga(int knjigaID)
         {
-            return db.Ocjenas.Where(x => x.KnjigaID == knjigaID).Include("Korisnik").Include("Knjiga").ToList();
+            return db.Knjigas.Where(x => x.Id == knjigaID).Select(x => new KnjigaDetaljiVM
+            {
+                Naslov = x.Naslov,
+                ISBN = x.ISBN,
+                Opis = x.Opis,
+                ProsjecnaOcjena = db.Ocjenas.Where(z => z.KnjigaID == x.Id).Average(g => g.OcjenaIznos),
+                AutorID = x.AutorId,
+                NazivAutora = x.Autor.Ime + " " + x.Autor.Prezime,
+                OcjenaInfoVMs = db.Ocjenas.Where(v => v.KnjigaID == knjigaID).Select(b => new eShelvesAPI.ViewModels.KnjigaDetaljiVM.OcjenaInfoVM
+                {
+                    KorisnikId = b.KorisnikID,
+                    Ocjena = b.OcjenaIznos,
+                    Opis = b.Opis,
+                    username = b.Korisnik.username
+                }).ToList()
+            }).Single();
         }
 
         // PUT: api/Ocjenas/5
