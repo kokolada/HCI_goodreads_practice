@@ -17,9 +17,13 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.readmore.tonka.adapters.KnjigeListAdapter;
 import com.readmore.tonka.adapters.PrijateljiAdapter;
+import com.readmore.tonka.helpers.Config;
+import com.readmore.tonka.helpers.MyVolley;
 import com.readmore.tonka.helpers.Sesija;
 import com.readmore.tonka.models.Knjiga;
 import com.readmore.tonka.models.Prijatelj;
+
+import org.apache.http.message.BasicNameValuePair;
 
 
 public class FriendsActivity extends ActionBarActivity {
@@ -31,24 +35,20 @@ public class FriendsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_friends);
         lv = (ListView)findViewById(R.id.friendslistview);
 
-        String url = "http://hci111.app.fit.ba/api/prijateljstvoes?userId="+ Sesija.getLogiraniKorisnik().Id;
-        RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Gson gson = new Gson();
-                        Prijatelj[] vrijednosti = gson.fromJson(response, Prijatelj[].class);
-                        ListAdapter adapter = new PrijateljiAdapter(getApplication(), vrijednosti);
-                        lv.setAdapter(adapter);
-                    }
-                }, new Response.ErrorListener() {
+        String url = Config.urlApi+"prijateljstvoes";
+
+        MyVolley.get(url, Prijatelj[].class, new Response.Listener<Prijatelj[]>() {
+            @Override
+            public void onResponse(Prijatelj[] response) {
+                ListAdapter adapter = new PrijateljiAdapter(getApplication(), response);
+                lv.setAdapter(adapter);
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
-        queue.add(stringRequest);
+        }, new BasicNameValuePair("userId", Sesija.getLogiraniKorisnik().Id+""));
     }
 
     @Override
