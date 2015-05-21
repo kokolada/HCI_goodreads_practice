@@ -2,6 +2,7 @@ package com.readmore.tonka.eshelvesnavdrawer;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -24,8 +25,12 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.readmore.tonka.adapters.PoliceAdapter;
 import com.readmore.tonka.dialogs.AddNewShelfDialog;
+import com.readmore.tonka.helpers.Config;
+import com.readmore.tonka.helpers.MyVolley;
 import com.readmore.tonka.helpers.Sesija;
 import com.readmore.tonka.models.Polica;
+
+import org.apache.http.message.BasicNameValuePair;
 
 /**
  * Created by anton_000 on 21.4.2015..
@@ -64,24 +69,20 @@ public class MyBooksFragment extends Fragment {
             }
         });
 
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String url ="http://hci111.app.fit.ba/api/policas?korisnikId="+ Sesija.getLogiraniKorisnik().Id;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Gson gson = new Gson();
-                        Polica[] vrijednosti = gson.fromJson(response, Polica[].class);
-                        ListAdapter adapter = new PoliceAdapter(getActivity(), vrijednosti);
-                        lv.setAdapter(adapter);
-                    }
-                }, new Response.ErrorListener() {
+        String url = Config.urlApi+"policas";
+
+        MyVolley.get(url, Polica[].class, new Response.Listener<Polica[]>() {
+            @Override
+            public void onResponse(Polica[] response) {
+                ListAdapter adapter = new PoliceAdapter(getActivity(), response);
+                lv.setAdapter(adapter);
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
-        queue.add(stringRequest);
+        }, new BasicNameValuePair("korisnikId", Sesija.getLogiraniKorisnik().Id+""));
 
         addNewShelf = (Button) rootView.findViewById(R.id.addShelfBtn);
         addNewShelf.setOnClickListener(new View.OnClickListener() {

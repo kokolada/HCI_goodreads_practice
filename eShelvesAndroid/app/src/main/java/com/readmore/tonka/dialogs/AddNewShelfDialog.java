@@ -50,19 +50,12 @@ public class AddNewShelfDialog extends DialogFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Polica p = new Polica();
                         EditText addshelfText = (EditText) view.findViewById(R.id.addshelftextedit);
-                        String Naziv = addshelfText.getText().toString();
                         p.Naziv = addshelfText.getText().toString();
                         p.KorisnikID = Sesija.getLogiraniKorisnik().Id;
-                        Gson gson = new Gson();
-                        String sPolica = gson.toJson(p, Polica.class);
 
                         String url = "http://hci111.app.fit.ba/api/Policas";
 
-                        MyVolley.post(url, null, null, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {}
-                        }, Naziv);
-
+                        MyVolley.post(url, null, null, null, p);
                     }
                 });
 

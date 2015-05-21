@@ -21,8 +21,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.readmore.tonka.adapters.KnjigeListAdapter;
+import com.readmore.tonka.helpers.Config;
+import com.readmore.tonka.helpers.MyVolley;
 import com.readmore.tonka.models.Knjiga;
 import com.readmore.tonka.models.Polica;
+
+import org.apache.http.message.BasicNameValuePair;
 
 
 public class PolicaDetailsActivity extends ActionBarActivity {
@@ -51,25 +55,20 @@ public class PolicaDetailsActivity extends ActionBarActivity {
         });
 
         test.setText("polica id: " + id);
-        String url = "http://hci111.app.fit.ba/api/knjigas?policaID=" + id;
+        String url = Config.urlApi + "knjigas";
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Gson gson = new Gson();
-                        Knjiga[] vrijednosti = gson.fromJson(response, Knjiga[].class);
-                        ListAdapter adapter = new KnjigeListAdapter(getApplication(), vrijednosti);
-                        lv.setAdapter(adapter);
-                    }
-                }, new Response.ErrorListener() {
+        MyVolley.get(url, Knjiga[].class, new Response.Listener<Knjiga[]>() {
+            @Override
+            public void onResponse(Knjiga[] response) {
+                ListAdapter adapter = new KnjigeListAdapter(getApplication(), response);
+                lv.setAdapter(adapter);
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        });
-        queue.add(stringRequest);
+        }, new BasicNameValuePair("policaID", id+""));
     }
 
 

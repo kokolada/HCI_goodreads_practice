@@ -15,7 +15,11 @@ public class MyVolley {
     public static <T>  void get(String urlStr, Class<T> responseType, Response.Listener<T> listener, Response.ErrorListener errorListener, BasicNameValuePair... inputParams)
     {
         String urlParam = URLEncodedUtils.format(Arrays.asList(inputParams), "utf-8");
-        String url = urlStr + "?" + urlParam;
+        String url;
+        if(urlParam.length() > 0)
+            url = urlStr + "?" + urlParam;
+        else
+            url = urlStr;
         GsonRequest<T> gsonRequest = new GsonRequest<>(Request.Method.GET, url, responseType, null, null, listener, errorListener);
         VolleySingleton.getInstance(MyApp.getAppContext()).addToRequestQueue(gsonRequest);
     }

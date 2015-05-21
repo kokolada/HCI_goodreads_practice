@@ -15,8 +15,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.readmore.tonka.eshelvesnavdrawer.R;
+import com.readmore.tonka.helpers.MyVolley;
 import com.readmore.tonka.helpers.Sesija;
 import com.readmore.tonka.models.Knjiga;
+import com.readmore.tonka.models.KnjigaDetaljiVM;
 import com.readmore.tonka.models.LogiraniKorisnik;
 
 public class KnjigaDetailsActivity extends ActionBarActivity {
@@ -42,24 +44,19 @@ public class KnjigaDetailsActivity extends ActionBarActivity {
 
         final TextView objekat = (TextView)findViewById(R.id.citavobjekat);
 
-        String url = "http://hci111.app.fit.ba/api/Ocjenas?knjigaID=3";
+        String url = "http://hci111.app.fit.ba/api/Ocjenas?knjigaID="+k.Id;
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        objekat.setText(response);
-                    }
-                }, new Response.ErrorListener() {
+        MyVolley.get(url, KnjigaDetaljiVM.class, new Response.Listener<KnjigaDetaljiVM>() {
+            @Override
+            public void onResponse(KnjigaDetaljiVM response) {
+                objekat.setText(response.toString());
+            }
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), "greska", Toast.LENGTH_SHORT).show();
             }
         });
-
-        queue.add(stringRequest);
     }
 
     @Override

@@ -27,10 +27,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.readmore.tonka.helpers.Config;
 import com.readmore.tonka.helpers.MyApp;
+import com.readmore.tonka.helpers.MyVolley;
 import com.readmore.tonka.helpers.Sesija;
 import com.readmore.tonka.models.LogiraniKorisnik;
 
+import org.apache.http.message.BasicNameValuePair;
 import org.w3c.dom.Text;
 
 
@@ -73,36 +76,21 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void login(View v){
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://hci111.app.fit.ba/api/test";
+        String url = Config.urlApi + "test";
         TextView username = (TextView)v.getRootView().findViewById(R.id.username);
         TextView password = (TextView)v.getRootView().findViewById(R.id.password);
-        String urlParams = url + "?username=" + username.getText() + "&password=" + password.getText();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlParams,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        logiraniKorisnikString = response;
-                        LogiraniKorisnik k = new LogiraniKorisnik();
-                        Gson gson = new Gson();
-                        k = gson.fromJson(logiraniKorisnikString, LogiraniKorisnik.class);
-                        if(k!=null) {
-                            Sesija.setLogiraniKorisnik(k);
-                            ZamjeniFragment();
-                        } else{
-                            Toast.makeText(getApplicationContext(), "pogresan username ili password", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
+
+        MyVolley.get(url, LogiraniKorisnik.class, new Response.Listener<LogiraniKorisnik>() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onResponse(LogiraniKorisnik response) {
+                if (response != null) {
+                    Sesija.setLogiraniKorisnik(response);
+                    ZamjeniFragment();
+                } else {
+                    Toast.makeText(getApplicationContext(), "pogresan username ili password", Toast.LENGTH_SHORT).show();
+                }
             }
-        });
-
-        queue.add(stringRequest);
-
+        }, null ,new BasicNameValuePair("username", username.getText()+""), new BasicNameValuePair("password", password.getText().toString()));
     }
 
     void ZamjeniFragment(){
