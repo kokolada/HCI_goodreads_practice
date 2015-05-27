@@ -39,6 +39,22 @@
             android:name="com.readmore.tonka.eshelvesnavdrawer.FriendsActivity"
             android:label="@string/title_activity_friends" >
         </activity>
+        <activity
+            android:name="com.readmore.tonka.eshelvesnavdrawer.ReviewDetailsActivity"
+            android:label="@string/title_activity_review_details" >
+        </activity>
+        <activity
+            android:name="com.readmore.tonka.eshelvesnavdrawer.SearchableActivity"
+            android:label="@string/title_activity_searchable"
+            android:launchMode="singleTop" >
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

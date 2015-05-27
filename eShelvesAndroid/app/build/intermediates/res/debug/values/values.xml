@@ -12,6 +12,25 @@
     <bool name="abc_config_actionMenuItemAllCaps">true</bool>
     <bool name="abc_config_allowActionMenuItemTextWithIcon">false</bool>
     <bool name="abc_config_showMenuShortcutsWhenKeyboardPresent">false</bool>
+    <!-- From: file:/C:/Users/anton/Documents/AndroidStudioProjects/eShelvesAndroid/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="Blue">#16a5d7</color>
+    <color name="DarkBlue">#0099cc</color>
+    <color name="DarkGreen">#669900</color>
+    <color name="DarkOrange">#ff8a00</color>
+    <color name="DarkPurple">#9933cc</color>
+    <color name="DarkRed">#cc0000</color>
+    <color name="Green">#7caf00</color>
+    <color name="LightBlue">#2cb1e1</color>
+    <color name="LightGreen">#92c500</color>
+    <color name="LightOrange">#ffb61c</color>
+    <color name="LightPurple">#c182e0</color>
+    <color name="LightRed">#f83a3a</color>
+    <color name="Orange">#ffa00e</color>
+    <color name="Purple">#ac59d6</color>
+    <color name="Red">#e21d1d</color>
+    <!-- From: file:/C:/Users/anton/Documents/AndroidStudioProjects/eShelvesAndroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <eat-comment/>
     <color name="abc_input_method_navigation_guard">@android:color/black</color>
     <color name="abc_search_url_text_normal">#7fa87f</color>
     <color name="abc_search_url_text_pressed">@android:color/black</color>
@@ -45,6 +64,15 @@
     <color name="material_blue_grey_950">#ff21272b</color>
     <color name="material_deep_teal_200">#ff80cbc4</color>
     <color name="material_deep_teal_500">#ff009688</color>
+    <!-- From: file:/C:/Users/anton/Documents/AndroidStudioProjects/eShelvesAndroid/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="mehBlue">#e2f4fb</color>
+    <color name="mehGreen">#f0f8db</color>
+    <color name="mehOrange">#fff6df</color>
+    <color name="mehPurple">#f5eafa</color>
+    <color name="mehRed">#ffe4e4</color>
+    <!-- From: file:/C:/Users/anton/Documents/AndroidStudioProjects/eShelvesAndroid/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/res/values/values.xml -->
+    <eat-comment/>
     <color name="primary_dark_material_dark">#ff000000</color>
     <color name="primary_dark_material_light">#ff757575</color>
     <color name="primary_material_dark">#ff212121</color>
@@ -174,7 +202,7 @@
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <!-- From: file:/C:/Users/anton/Documents/AndroidStudioProjects/eShelvesAndroid/app/src/main/res/values/strings.xml -->
     <eat-comment/>
-    <string name="action_example">Example action</string>
+    <string name="action_example">Search</string>
     <string name="action_settings">Settings</string>
     <string name="app_name">eShelvesNavDrawer</string>
     <string name="hello_world">Hello world!</string>
@@ -183,6 +211,8 @@
     <string name="title_activity_friends">FriendsActivity</string>
     <string name="title_activity_knjiga_details">KnjigaDetailsActivity</string>
     <string name="title_activity_polica_details">PolicaDetailsActivity</string>
+    <string name="title_activity_review_details">ReviewDetailsActivity</string>
+    <string name="title_activity_searchable">SearchableActivity</string>
     <string name="title_section1">Feed</string>
     <string name="title_section2">Profile</string>
     <string name="title_section3">My Books</string>

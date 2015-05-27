@@ -1,5 +1,6 @@
 package com.readmore.tonka.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class KnjigaDetaljiVM {
 
     public List<OcjenaInfoVM> OcjenaInfoVMs;
 
-    public class OcjenaInfoVM{
+    public class OcjenaInfoVM implements Serializable{
         public int KorisnikId;
         public String username;
         public int Ocjena;
