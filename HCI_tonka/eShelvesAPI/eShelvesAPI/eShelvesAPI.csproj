@@ -183,6 +183,7 @@
     <Compile Include="Models\TimelineItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\KnjigaDetaljiVM.cs" />
+    <Compile Include="ViewModels\OcjenaVM.cs" />
     <Compile Include="ViewModels\PolicaWM.cs" />
     <Compile Include="ViewModels\PrijateljVM.cs" />
     <Compile Include="ViewModels\TimelineItemVM.cs" />

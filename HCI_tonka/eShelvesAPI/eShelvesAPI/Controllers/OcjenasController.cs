@@ -108,6 +108,26 @@ namespace eShelvesAPI.Controllers
             return CreatedAtRoute("DefaultApi", new { id = ocjena.Id }, ocjena);
         }
 
+        [HttpPost]
+        public OcjenaVM PostOcjena(OcjenaVM ocjena)
+        {
+            Ocjena o = db.Ocjenas.Where(x => x.KorisnikID == ocjena.KorisnikID).FirstOrDefault();
+            if (o != null)
+                o.OcjenaIznos = ocjena.Ocjena;
+            else
+            {
+                o = new Ocjena();
+                o.KnjigaID = ocjena.KnjigaID;
+                o.KorisnikID = ocjena.KorisnikID;
+                o.OcjenaIznos = ocjena.Ocjena;
+                db.Ocjenas.Add(o);
+            }
+
+            db.SaveChanges();
+
+            return ocjena;
+        }
+
         // DELETE: api/Ocjenas/5
         [ResponseType(typeof(Ocjena))]
         public IHttpActionResult DeleteOcjena(int id)
