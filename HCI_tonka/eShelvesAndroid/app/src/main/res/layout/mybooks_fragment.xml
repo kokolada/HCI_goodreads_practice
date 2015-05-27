@@ -8,19 +8,21 @@
         android:layout_height="wrap_content"
         android:text="MY BOOKS"
         android:textSize="40sp"/>
+
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/mybooksListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:paddingTop="16dp"/>
+        android:layout_weight="1"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/addShelfBtn"
         android:text="Add a new shelf"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:layout_marginTop="8dp"/>
 
 </LinearLayout>

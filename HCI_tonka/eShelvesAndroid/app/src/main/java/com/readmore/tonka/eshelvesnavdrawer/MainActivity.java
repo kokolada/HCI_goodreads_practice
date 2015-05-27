@@ -1,6 +1,7 @@
 package com.readmore.tonka.eshelvesnavdrawer;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,7 +92,7 @@ public class MainActivity extends ActionBarActivity
                     Toast.makeText(getApplicationContext(), "pogresan username ili password", Toast.LENGTH_SHORT).show();
                 }
             }
-        }, null ,new BasicNameValuePair("username", username.getText()+""), new BasicNameValuePair("password", password.getText().toString()));
+        }, null, new BasicNameValuePair("username", username.getText() + ""), new BasicNameValuePair("password", password.getText().toString()));
     }
 
     void ZamjeniFragment(){
@@ -196,10 +198,12 @@ public class MainActivity extends ActionBarActivity
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
+
             getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
             return true;
         }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -213,6 +217,9 @@ public class MainActivity extends ActionBarActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        if(id == R.id.search){
+            Toast.makeText(getApplication(), "search kliknut", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
