@@ -93,7 +93,7 @@ namespace eShelvesAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Ocjenas
+       /* // POST: api/Ocjenas
         [ResponseType(typeof(Ocjena))]
         public IHttpActionResult PostOcjena(Ocjena ocjena)
         {
@@ -106,7 +106,7 @@ namespace eShelvesAPI.Controllers
             db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = ocjena.Id }, ocjena);
-        }
+        }*/
 
         [HttpPost]
         public OcjenaVM PostOcjena(OcjenaVM ocjena)

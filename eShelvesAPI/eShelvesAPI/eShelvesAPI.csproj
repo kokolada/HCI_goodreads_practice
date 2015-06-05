@@ -174,6 +174,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\LeRecommender.cs" />
+    <Compile Include="Helpers\Preporuka.cs" />
     <Compile Include="Helpers\Various.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Autor.cs" />
