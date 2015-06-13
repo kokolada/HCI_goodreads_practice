@@ -10,6 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using eShelvesAPI.DAL;
 using eShelvesAPI.Models;
+using eShelvesAPI.ViewModels;
 
 namespace eShelvesAPI.Controllers
 {
@@ -78,7 +79,7 @@ namespace eShelvesAPI.Controllers
 		}
 
 		// POST: api/Knjigas
-		[ResponseType(typeof(Knjiga))]
+		/*[ResponseType(typeof(Knjiga))]
 		public IHttpActionResult PostKnjiga(Knjiga knjiga)
 		{
 			if (!ModelState.IsValid)
@@ -90,7 +91,19 @@ namespace eShelvesAPI.Controllers
 			db.SaveChanges();
 
 			return CreatedAtRoute("DefaultApi", new { id = knjiga.Id }, knjiga);
-		}
+		}*/
+
+        [HttpPost]
+        public KnjigaPolicaVM PostKnjiga(KnjigaPolicaVM kp)
+        {
+            Knjiga k = db.Knjigas.Find(kp.knjigaId);
+            Polica p = db.Policas.Find(kp.policaId);
+            p.Knjigas.Add(k);
+            db.Policas.Add(p);
+            db.SaveChanges();
+
+            return kp;
+        }
 
 		// DELETE: api/Knjigas/5
 		[ResponseType(typeof(Knjiga))]

@@ -164,10 +164,13 @@
     <Compile Include="Controllers\KorisniksController.cs" />
     <Compile Include="Controllers\OcjenasController.cs" />
     <Compile Include="Controllers\PolicasController.cs" />
+    <Compile Include="Controllers\PreporukeController.cs" />
     <Compile Include="Controllers\PrijateljstvoesController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RecommendationController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\TimelineController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DAL\MojContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -188,6 +191,8 @@
     <Compile Include="Models\TimelineItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\KnjigaDetaljiVM.cs" />
+    <Compile Include="ViewModels\KnjigaPolicaVM.cs" />
+    <Compile Include="ViewModels\KnjigaVM.cs" />
     <Compile Include="ViewModels\OcjenaVM.cs" />
     <Compile Include="ViewModels\PolicaWM.cs" />
     <Compile Include="ViewModels\PrijateljVM.cs" />

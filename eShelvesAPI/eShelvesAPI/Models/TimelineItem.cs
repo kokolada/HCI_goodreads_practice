@@ -10,6 +10,7 @@ namespace eShelvesAPI.Models
         public int Id { get; set; }
         public string EventDescription { get; set; }
         public DateTime EventDate { get; set; }
+        public bool IsOcjena { get; set; }
 
         public int KnjigaID { get; set; }
         public Knjiga Knjiga { get; set; }

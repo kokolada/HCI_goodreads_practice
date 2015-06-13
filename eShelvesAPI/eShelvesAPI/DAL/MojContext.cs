@@ -17,6 +17,7 @@ namespace eShelvesAPI.DAL
 		public DbSet<Ocjena> Ocjenas { get; set; }
 		public DbSet<Polica> Policas { get; set; }
 		public DbSet<Prijateljstvo> Prijateljstvos { get; set; }
+        public DbSet<TimelineItem> TimelineItems { get; set; }
 
 		public MojContext()
 			: base("Name=MyConnectionString")
