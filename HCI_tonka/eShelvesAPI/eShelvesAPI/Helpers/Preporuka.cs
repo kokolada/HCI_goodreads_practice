@@ -1,5 +1,6 @@
 ﻿using eShelvesAPI.DAL;
 using eShelvesAPI.Models;
+using eShelvesAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,81 @@ namespace eShelvesAPI.Helpers
     {
         Dictionary<int?, List<Ocjena>> knjige = new Dictionary<int?, List<Ocjena>>();
         private MojContext db = new MojContext();
+
+        public List<Knjiga> GetPreporuceneKnjige(int korisnikId)
+        {
+            Korisnik k = db.Korisnics.Where(x => x.Id == korisnikId).First();
+            List<Korisnik> korisnici = db.Korisnics.Where(x => x.Id != korisnikId && x.Ocjenas.Count() > 0).ToList();
+
+            Dictionary<int, double> slicnosti = new Dictionary<int, double>();
+            
+            foreach (Korisnik i in korisnici)
+            {
+                double slicnost = IzracunajSlicnostKorisnika(k, i);
+                if (slicnost > 0.2 || i.Prijateljstvos.Where(x => x.Korisnik2ID == k.Id).Count() > 0)
+                {
+                    slicnosti.Add(i.Id ,slicnost);
+                }
+            }
+
+            var l = slicnosti.OrderByDescending(x => x.Value);
+            Dictionary<int, double> sortirani = l.ToDictionary((keyItem) => keyItem.Key, (valueItem) => valueItem.Value);
+
+            //ovde napuniti listu knjiga sa knjigama od svakog korisnika koje je najvise ocjenio, a nas korisnik ih nije ocjenio nikako
+            List<Knjiga> preporuceneKnjige = new List<Knjiga>();
+            
+            //proci kroz svakog korisnika
+            foreach (KeyValuePair<int,double> item in sortirani)
+            {
+                //uzeti knjige koje je on ocjenio dobro a nas korisnik nije nikako
+                List<Ocjena> ocjene = db.Ocjenas.Where(x => x.KorisnikID == item.Key).ToList();
+                foreach (Ocjena o in ocjene)
+                {
+                    if (o.OcjenaIznos > 3 && db.Ocjenas.Where(z => z.Id == o.Id && o.KorisnikID == korisnikId).Count() == 0)
+                        preporuceneKnjige.Add(db.Knjigas.Where(x => x.Id == o.KnjigaID).First());
+                }
+            }
+
+            return preporuceneKnjige;
+        }
+
+        private double IzracunajSlicnostKorisnika(Korisnik k1, Korisnik k2)
+        {
+            List<Ocjena> ocjene1;
+            List<Ocjena> ocjene2;
+
+            ocjene1 = db.Ocjenas.Where(x => x.KorisnikID == k1.Id).OrderBy(c => c.KnjigaID).ToList();
+            ocjene2 = db.Ocjenas.Where(x => x.KorisnikID == k2.Id).OrderBy(c => c.KnjigaID).ToList();
+
+            List<Ocjena> zajednicke1 = new List<Ocjena>();
+            List<Ocjena> zajednicke2 = new List<Ocjena>();
+
+            foreach (Ocjena o in ocjene1)
+            {
+                if (ocjene2.Where(x => x.KnjigaID == o.KnjigaID).Count() > 0)
+                {
+                    zajednicke1.Add(o);
+                    zajednicke2.Add(ocjene2.Where(x => x.KnjigaID == o.KnjigaID).First());
+                }
+            }
+
+            double prosjek1 = zajednicke1.Average(x => x.OcjenaIznos);
+            double prosjek2 = zajednicke2.Average(x => x.OcjenaIznos);
+
+            double brojnik = 0;
+            double sumakvadrata1 = 0;
+            double sumakvadrata2 = 0;
+
+            for (int i = 0; i < zajednicke1.Count(); i++)
+            {
+                brojnik += ((zajednicke1[i].OcjenaIznos - prosjek1)*(zajednicke2[i].OcjenaIznos-prosjek2));
+                sumakvadrata1 += (zajednicke1[i].OcjenaIznos - prosjek1) * (zajednicke1[i].OcjenaIznos - prosjek1);
+                sumakvadrata2 += (zajednicke2[i].OcjenaIznos - prosjek2) * (zajednicke2[i].OcjenaIznos - prosjek2);
+            }
+
+            double slicnost = brojnik / (Math.Sqrt(sumakvadrata1) * Math.Sqrt(sumakvadrata2));
+            return slicnost;
+        }
 
         //Funkcija koja se poziva iz mobilnog dijela aplikacije
         public List<Knjiga> GetSlicneKnjige(int knjigaId)
