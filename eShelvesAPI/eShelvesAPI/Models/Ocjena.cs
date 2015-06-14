@@ -17,6 +17,6 @@ namespace eShelvesAPI.Models
 		public int KorisnikID { get; set; }
 		public Korisnik Korisnik { get; set; }
 
-		public DateTime DatumOcjene { get; set; }
+		public DateTime? DatumOcjene { get; set; }
 	}
 }
