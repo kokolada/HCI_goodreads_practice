@@ -31,7 +31,7 @@ public class KnjigeListAdapter extends ArrayAdapter<Knjiga> {
         TextView naslov = (TextView) view.findViewById(R.id.BookTitle);
         naslov.setText(Neki.Naslov);
         TextView autor = (TextView) view.findViewById(R.id.BookAuthor);
-        autor.setText("autor id: " + Neki.AutorID);
+        autor.setText(Neki.NazivAutora);
 
         return view;
     }

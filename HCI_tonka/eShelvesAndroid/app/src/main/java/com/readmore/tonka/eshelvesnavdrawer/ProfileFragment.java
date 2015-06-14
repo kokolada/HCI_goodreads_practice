@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +13,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
+import com.readmore.tonka.activities.PolicaDetailsActivity;
 import com.readmore.tonka.adapters.PoliceAdapter;
+import com.readmore.tonka.fragmentactivities.FriendsFragment;
 import com.readmore.tonka.helpers.Config;
-import com.readmore.tonka.helpers.MyApp;
 import com.readmore.tonka.helpers.MyVolley;
 import com.readmore.tonka.helpers.Sesija;
+import com.readmore.tonka.models.Korisnik;
 import com.readmore.tonka.models.Polica;
 
 import org.apache.http.message.BasicNameValuePair;
@@ -37,11 +33,31 @@ public class ProfileFragment extends Fragment{
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     ListView lv;
+    TextView username;
+    TextView details;
+    TextView joined;
 
     public static ProfileFragment newInstance(int sectionNumber) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static ProfileFragment newInstance(int sectionNumber, int profileID){
+        ProfileFragment fragment = new ProfileFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        args.putInt("id", profileID);
+        fragment.setArguments(args);
+        return fragment;
+    }
+    public static ProfileFragment newInstance(int profileID, String username){
+        ProfileFragment fragment = new ProfileFragment();
+        Bundle args = new Bundle();
+        args.putString("username", username);
+        args.putInt("id", profileID);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,11 +69,28 @@ public class ProfileFragment extends Fragment{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.profile_fragment, container, false);
         lv = (ListView)rootView.findViewById(R.id.policeProfilListView);
+        username = (TextView) rootView.findViewById(R.id.username);
+        details = (TextView) rootView.findViewById(R.id.detailsfragmentdetails);
+        joined = (TextView) rootView.findViewById(R.id.detailsfragmentjoined);
+
+        if(getArguments().get("id")!=null){
+            int korisnikId = getArguments().getInt("id");
+            MyVolley.get(Config.urlApi + "Korisniks", Korisnik.class, new Response.Listener<Korisnik>() {
+                @Override
+                public void onResponse(Korisnik response) {
+                    details.setText(response.Ime + " " + response.Prezime + ", " + response.Grad);
+                    joined.setText(response.created_at.toString());
+                }
+            }, null, new BasicNameValuePair("id", korisnikId+""));
+        }
+
+        if(getArguments().get("username")!=null)
+            username.setText(getArguments().getString("username"));
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Polica itemClicked =(Polica)parent.getAdapter().getItem(position);
+                Polica itemClicked = (Polica) parent.getAdapter().getItem(position);
                 Intent intent = new Intent(getActivity(), PolicaDetailsActivity.class);
                 intent.putExtra("policaID", itemClicked.Id);
                 startActivity(intent);
@@ -68,12 +101,18 @@ public class ProfileFragment extends Fragment{
         fptw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyApp.getAppContext(), FriendsActivity.class);
-                startActivity(intent);
+                Sesija.UletiDublje(FriendsFragment.newInstance(), getActivity().getSupportFragmentManager());
             }
         });
 
         String url = Config.urlApi+"policas";
+
+        BasicNameValuePair params = null;
+        if(getArguments().get("id") != null) {
+            params = new BasicNameValuePair("korisnikId", getArguments().getInt("id") + "");
+        }
+        else
+            params = new BasicNameValuePair("korisnikId", Sesija.getLogiraniKorisnik().Id+"");
 
         MyVolley.get(url, Polica[].class, new Response.Listener<Polica[]>() {
             @Override
@@ -86,10 +125,12 @@ public class ProfileFragment extends Fragment{
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        }, new BasicNameValuePair("korisnikId", Sesija.getLogiraniKorisnik().Id + ""));
+        }, params);
 
         return rootView;
     }
+
+
 
     @Override
     public void onAttach(Activity activity) {

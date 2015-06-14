@@ -23,23 +23,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PolicaDetailsActivity"
+            android:name="com.readmore.tonka.activities.PolicaDetailsActivity"
             android:label="@string/title_activity_polica_details" >
         </activity>
         <activity
-            android:name=".KnjigaDetailsActivity"
+            android:name="com.readmore.tonka.activities.KnjigaDetailsActivity"
             android:label="@string/title_activity_knjiga_details" >
         </activity>
         <activity
-            android:name=".FriendsActivity"
+            android:name="com.readmore.tonka.activities.FriendsActivity"
             android:label="@string/title_activity_friends" >
         </activity>
         <activity
-            android:name=".ReviewDetailsActivity"
+            android:name="com.readmore.tonka.activities.ReviewDetailsActivity"
             android:label="@string/title_activity_review_details" >
         </activity>
         <activity
-            android:name=".SearchableActivity"
+            android:name="com.readmore.tonka.activities.SearchableActivity"
             android:label="@string/title_activity_searchable"
             android:launchMode="singleTop">
             <meta-data

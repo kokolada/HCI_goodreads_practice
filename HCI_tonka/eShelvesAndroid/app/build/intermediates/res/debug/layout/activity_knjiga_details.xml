@@ -5,7 +5,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.readmore.tonka.eshelvesnavdrawer.KnjigaDetailsActivity">
+    tools:context="com.readmore.tonka.activities.KnjigaDetailsActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,6 +24,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/ratingBar"
         android:stepSize="1.0"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addtoshelfbtn"
+        android:text="add to shelf"/>
 
     <TextView
         android:layout_width="wrap_content"

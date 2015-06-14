@@ -7,6 +7,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="RECOMMENDATIONS"
-        android:textSize="40sp"/>
+        android:textSize="30sp"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/preporukeLista"></ListView>
 
 </LinearLayout>
