@@ -10,11 +10,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/Blue"
+        android:textSize="30sp"
         android:id="@+id/ocjenjivac"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:id="@+id/iznosocjene"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
         android:id="@+id/opisocjene"/>
 
 </LinearLayout>
