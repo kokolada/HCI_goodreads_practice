@@ -13,7 +13,7 @@ namespace eShelvesAPI.Controllers
     public class PreporukeController : ApiController
     {
         [HttpGet]
-        public List<Knjiga> getPreporuceneKnjige(int korisnikId)
+        public List<KnjigaVM> getPreporuceneKnjige(int korisnikId)
         {
             Preporuka p = new Preporuka();
             return p.GetPreporuceneKnjige(korisnikId);

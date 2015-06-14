@@ -121,16 +121,16 @@ namespace eShelvesAPI.Controllers
                 o.KorisnikID = ocjena.KorisnikID;
                 o.OcjenaIznos = ocjena.Ocjena;
                 o.Opis = "asd";
-                //o.DatumOcjene = DateTime.Now;
+                o.DatumOcjene = DateTime.Now;
                 db.Ocjenas.Add(o);
-                /*
+                
                 TimelineItem timeline = new TimelineItem();
                 timeline.EventDate = DateTime.Now;
                 timeline.IsOcjena = true;
                 timeline.KnjigaID = ocjena.KnjigaID;
                 timeline.KorisnikID = ocjena.KorisnikID;
                 timeline.EventDescription = " je ocjenio ";
-                db.TimelineItems.Add(timeline);*/
+                db.TimelineItems.Add(timeline);
             }
 
             db.SaveChanges();

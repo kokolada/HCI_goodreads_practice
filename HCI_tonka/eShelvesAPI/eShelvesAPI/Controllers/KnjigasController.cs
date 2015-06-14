@@ -100,6 +100,15 @@ namespace eShelvesAPI.Controllers
             Polica p = db.Policas.Find(kp.policaId);
             p.Knjigas.Add(k);
             db.Policas.Add(p);
+
+            TimelineItem ti = new TimelineItem();
+            ti.EventDate = DateTime.Now;
+            ti.EventDescription = "je dodao u policu";
+            ti.IsOcjena = false;
+            ti.KnjigaID = kp.knjigaId;
+            ti.KorisnikID = kp.korisnikId;
+            db.TimelineItems.Add(ti);
+
             db.SaveChanges();
 
             return kp;

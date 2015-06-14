@@ -13,7 +13,7 @@ namespace eShelvesAPI.Helpers
         Dictionary<int?, List<Ocjena>> knjige = new Dictionary<int?, List<Ocjena>>();
         private MojContext db = new MojContext();
 
-        public List<Knjiga> GetPreporuceneKnjige(int korisnikId)
+        public List<KnjigaVM> GetPreporuceneKnjige(int korisnikId)
         {
             Korisnik k = db.Korisnics.Where(x => x.Id == korisnikId).First();
             List<Korisnik> korisnici = db.Korisnics.Where(x => x.Id != korisnikId && x.Ocjenas.Count() > 0).ToList();
@@ -23,9 +23,12 @@ namespace eShelvesAPI.Helpers
             foreach (Korisnik i in korisnici)
             {
                 double slicnost = IzracunajSlicnostKorisnika(k, i);
-                if (slicnost > 0.2 || i.Prijateljstvos.Where(x => x.Korisnik2ID == k.Id).Count() > 0)
+                if (/*slicnost > 0.2 ||*/ SuPrijatelji(k.Id, i.Id))
                 {
-                    slicnosti.Add(i.Id ,slicnost);
+                    if(Double.IsNaN(slicnost))
+                        slicnosti.Add(i.Id ,0);
+                    else
+                        slicnosti.Add(i.Id, slicnost);
                 }
             }
 
@@ -42,12 +45,26 @@ namespace eShelvesAPI.Helpers
                 List<Ocjena> ocjene = db.Ocjenas.Where(x => x.KorisnikID == item.Key).ToList();
                 foreach (Ocjena o in ocjene)
                 {
-                    if (o.OcjenaIznos > 3 && db.Ocjenas.Where(z => z.Id == o.Id && o.KorisnikID == korisnikId).Count() == 0)
+                     if(o.OcjenaIznos > 0 && db.Ocjenas.Where(z => z.Id == o.Id && o.KorisnikID == korisnikId).Count() == 0)
                         preporuceneKnjige.Add(db.Knjigas.Where(x => x.Id == o.KnjigaID).First());
                 }
             }
+            List<KnjigaVM> kvm = preporuceneKnjige.Select(x => new KnjigaVM
+            {
+                AutorId = x.AutorId,
+                Id = x.Id,
+                ISBN = x.ISBN,
+                Naslov = x.Naslov,
+                NazivAutora = db.Autors.Find(x.AutorId).Ime + " " + db.Autors.Find(x.AutorId).Prezime
+            }).ToList();
+            return kvm;
+        }
 
-            return preporuceneKnjige;
+        private bool SuPrijatelji(int id1, int id2)
+        {
+            if (id1 > id2)
+                return db.Prijateljstvos.Where(x => x.Korisnik2ID == id1 && x.Korisnik1ID == id2).Count() > 0;
+            return db.Prijateljstvos.Where(x => x.Korisnik1ID == id1 && x.Korisnik2ID == id2).Count() > 0;
         }
 
         private double IzracunajSlicnostKorisnika(Korisnik k1, Korisnik k2)
