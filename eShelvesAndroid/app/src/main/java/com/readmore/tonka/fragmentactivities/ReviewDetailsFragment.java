@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.readmore.tonka.eshelvesnavdrawer.ProfileFragment;
 import com.readmore.tonka.eshelvesnavdrawer.R;
+import com.readmore.tonka.helpers.Sesija;
 import com.readmore.tonka.models.KnjigaDetaljiVM;
 
 /**
@@ -38,11 +40,20 @@ public class ReviewDetailsFragment extends Fragment{
 
         TextView ocjenjivac = (TextView)rootView.findViewById(R.id.ocjenjivac);
         TextView opisocjene = (TextView)rootView.findViewById(R.id.opisocjene);
+        TextView iznosocjene = (TextView) rootView.findViewById(R.id.iznosocjene);
 
-        KnjigaDetaljiVM.OcjenaInfoVM ocjena = (KnjigaDetaljiVM.OcjenaInfoVM) getArguments().getSerializable("ocjena");
+        final KnjigaDetaljiVM.OcjenaInfoVM ocjena = (KnjigaDetaljiVM.OcjenaInfoVM) getArguments().getSerializable("ocjena");
 
-        ocjenjivac.setText(ocjena.username + " " + ocjena.Ocjena);
+        ocjenjivac.setText(ocjena.username);
         opisocjene.setText(ocjena.Opis);
+        iznosocjene.setText(ocjena.Ocjena+"");
+
+        ocjenjivac.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Sesija.UletiDublje(ProfileFragment.newInstance(ocjena.KorisnikId, ocjena.username), getActivity().getSupportFragmentManager());
+            }
+        });
 
         return rootView;
     }
