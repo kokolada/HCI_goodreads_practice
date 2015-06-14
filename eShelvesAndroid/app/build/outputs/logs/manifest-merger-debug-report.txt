@@ -51,31 +51,31 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:22:17
 	android:name
 		ADDED from AndroidManifest.xml:22:27
-activity#com.readmore.tonka.eshelvesnavdrawer.PolicaDetailsActivity
+activity#com.readmore.tonka.activities.PolicaDetailsActivity
 ADDED from AndroidManifest.xml:25:9
 	android:label
 		ADDED from AndroidManifest.xml:27:13
 	android:name
 		ADDED from AndroidManifest.xml:26:13
-activity#com.readmore.tonka.eshelvesnavdrawer.KnjigaDetailsActivity
+activity#com.readmore.tonka.activities.KnjigaDetailsActivity
 ADDED from AndroidManifest.xml:29:9
 	android:label
 		ADDED from AndroidManifest.xml:31:13
 	android:name
 		ADDED from AndroidManifest.xml:30:13
-activity#com.readmore.tonka.eshelvesnavdrawer.FriendsActivity
+activity#com.readmore.tonka.activities.FriendsActivity
 ADDED from AndroidManifest.xml:33:9
 	android:label
 		ADDED from AndroidManifest.xml:35:13
 	android:name
 		ADDED from AndroidManifest.xml:34:13
-activity#com.readmore.tonka.eshelvesnavdrawer.ReviewDetailsActivity
+activity#com.readmore.tonka.activities.ReviewDetailsActivity
 ADDED from AndroidManifest.xml:37:9
 	android:label
 		ADDED from AndroidManifest.xml:39:13
 	android:name
 		ADDED from AndroidManifest.xml:38:13
-activity#com.readmore.tonka.eshelvesnavdrawer.SearchableActivity
+activity#com.readmore.tonka.activities.SearchableActivity
 ADDED from AndroidManifest.xml:41:9
 	android:label
 		ADDED from AndroidManifest.xml:43:13

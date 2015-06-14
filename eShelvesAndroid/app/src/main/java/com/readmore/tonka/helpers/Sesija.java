@@ -34,36 +34,29 @@ public class Sesija {
         return navigacija.size();
     }
 
-    public static void addFragment(Class aClass){ navigacija.add(new NavContainer(aClass, null)); }
-
-    public static void addFragment(Class aClass, Bundle bundle){ navigacija.add(new NavContainer(aClass, bundle)); }
+    public static void addFragment(Fragment fragment){ navigacija.add(new NavContainer(fragment.getClass(), fragment.getArguments())); }
 
     public static Fragment getReturnFragment(){
         NavContainer nav =  navigacija.pop();
-        Fragment fragment = null;
         try {
-            fragment = nav.fragment.newInstance();
+            final Fragment fragment = nav.fragment.newInstance();
             fragment.setArguments(nav.bundle);
+            currentFragment = fragment;
+            return fragment;
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
 
-        currentFragment = fragment;
-        return fragment;
+        return null;
     }
 
-    public static void UletiDublje(Class aClass, Bundle bundle, FragmentManager fragmentManager){
-        addFragment(currentFragment.getClass(), currentFragment.getArguments());
+    public static void UletiDublje(Fragment fragment, FragmentManager fragmentManager){
+        if(currentFragment!=null)
+            addFragment(currentFragment);
 
-        try {
-            currentFragment = (Fragment)aClass.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        currentFragment = fragment;
 
         fragmentManager.beginTransaction().replace(R.id.container, Sesija.currentFragment).commit();
     }

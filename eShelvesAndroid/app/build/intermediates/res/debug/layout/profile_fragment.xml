@@ -25,16 +25,19 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textColor="@android:color/holo_red_dark"
-                android:text="Kokolada"/>
+                android:text="Kokolada"
+                android:id="@+id/username"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/detailsfragmentdetails"
                 android:text="details: "/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/detailsfragmentjoined"
                 android:text="joined: "/>
 
         </LinearLayout>

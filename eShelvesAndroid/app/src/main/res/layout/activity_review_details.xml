@@ -5,7 +5,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.readmore.tonka.eshelvesnavdrawer.ReviewDetailsActivity">
+    tools:context="com.readmore.tonka.activities.ReviewDetailsActivity">
 
     <TextView
         android:layout_width="wrap_content"

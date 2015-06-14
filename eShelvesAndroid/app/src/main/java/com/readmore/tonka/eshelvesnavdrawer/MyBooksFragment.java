@@ -1,8 +1,6 @@
 package com.readmore.tonka.eshelvesnavdrawer;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -16,15 +14,12 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
+import com.readmore.tonka.activities.PolicaDetailsActivity;
 import com.readmore.tonka.adapters.PoliceAdapter;
 import com.readmore.tonka.dialogs.AddNewShelfDialog;
+import com.readmore.tonka.fragmentactivities.PolicaDetailsFragment;
 import com.readmore.tonka.helpers.Config;
 import com.readmore.tonka.helpers.MyVolley;
 import com.readmore.tonka.helpers.Sesija;
@@ -60,9 +55,7 @@ public class MyBooksFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Polica itemClicked =(Polica)parent.getAdapter().getItem(position);
                 if(itemClicked.BookCount > 0) {
-                    Intent intent = new Intent(getActivity(), PolicaDetailsActivity.class);
-                    intent.putExtra("policaID", itemClicked.Id);
-                    startActivity(intent);
+                    Sesija.UletiDublje(PolicaDetailsFragment.newInstance(itemClicked.Id), getActivity().getSupportFragmentManager());
                 } else{
                     Toast.makeText(getActivity(),"There are no books in this shelf!", Toast.LENGTH_SHORT).show();
                 }

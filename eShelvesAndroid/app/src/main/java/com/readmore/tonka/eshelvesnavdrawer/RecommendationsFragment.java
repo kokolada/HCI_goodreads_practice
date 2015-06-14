@@ -6,6 +6,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import com.android.volley.Response;
+import com.readmore.tonka.adapters.KnjigeListAdapter;
+import com.readmore.tonka.helpers.Config;
+import com.readmore.tonka.helpers.MyVolley;
+import com.readmore.tonka.helpers.Sesija;
+import com.readmore.tonka.models.Knjiga;
+
+import org.apache.http.message.BasicNameValuePair;
 
 /**
  * Created by anton_000 on 21.4.2015..
@@ -28,6 +39,17 @@ public class RecommendationsFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recommendations_fragment, container, false);
+
+        final ListView lv = (ListView) rootView.findViewById(R.id.preporukeLista);
+
+        MyVolley.get(Config.urlApi + "Preporuke", Knjiga[].class, new Response.Listener<Knjiga[]>() {
+            @Override
+            public void onResponse(Knjiga[] response) {
+                ArrayAdapter adapter = new KnjigeListAdapter(getActivity(), response);
+                lv.setAdapter(adapter);
+            }
+        }, null, new BasicNameValuePair("korisnikId", Sesija.getLogiraniKorisnik().Id+""));
+
         return rootView;
     }
 

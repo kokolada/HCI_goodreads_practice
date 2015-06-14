@@ -16,16 +16,24 @@
             android:src="@drawable/abc_btn_check_to_on_mtrl_015"
             android:id="@+id/slika"/>
         <TextView
-            android:id="@+id/label"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"/>
+            android:id="@+id/timelineuser"
+            android:textColor="@color/Blue"
+            android:textSize="25sp"/>
+        <TextView
+            android:id="@+id/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:textSize="20sp"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/drugi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
         android:orientation="horizontal"
         android:layout_below="@+id/prvi"
         android:background="@color/abc_search_url_text_normal">
@@ -53,32 +61,20 @@
                 android:text="by Allan Pease"
                 android:layout_below="@+id/textviewtitle"/>
 
+            <RatingBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/timelineratingbar"
+                android:layout_below="@+id/textviewauthor"/>
+
             <Button
                 android:layout_width="400px"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textviewauthor"
-                android:text="Read"/>
+                android:layout_below="@+id/timelineratingbar"
+                android:text="add to shelf"
+                android:id="@+id/addtoshelfbtn"/>
 
             </RelativeLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-         android:orientation="horizontal"
-        android:layout_below="@+id/drugi"
-        android:background="@color/abc_search_url_text_normal">
-
-        <Button
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:text="Like"/>
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Comment"/>
 
     </LinearLayout>
 

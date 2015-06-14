@@ -1,7 +1,9 @@
 package com.readmore.tonka.eshelvesnavdrawer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -29,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.readmore.tonka.fragmentactivities.SearchFragment;
 import com.readmore.tonka.helpers.Config;
 import com.readmore.tonka.helpers.MyApp;
 import com.readmore.tonka.helpers.MyVolley;
@@ -95,6 +98,30 @@ public class MainActivity extends ActionBarActivity
         }, null, new BasicNameValuePair("username", username.getText() + ""), new BasicNameValuePair("password", password.getText().toString()));
     }
 
+    @Override
+    public void onBackPressed() {
+        if(Sesija.getDubina() == 0) {
+            //super.onBackPressed();
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Exiting Application")
+                    .setMessage("Are you sure you want to close eShelves?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        }
+        else {
+            Sesija.IdiNazad(getSupportFragmentManager());
+        }
+    }
+
     void ZamjeniFragment(){
         FragmentManager fragmentManager = getSupportFragmentManager();
         int position = mNavigationDrawerFragment.getmCurrentSelectedPosition();
@@ -135,26 +162,32 @@ public class MainActivity extends ActionBarActivity
                     .replace(R.id.container, LoginFragment.newInstance(position + 1))
                     .commit();
         } else {
+            Fragment fragment;
             switch(position){
                 case 0: fragmentManager.beginTransaction()
-                        .replace(R.id.container, TimelineFragment.newInstance(position + 1))
+                        .replace(R.id.container, fragment = TimelineFragment.newInstance(position + 1))
                         .commit();
+                    Sesija.currentFragment = fragment;
                     break;
                 case 1: fragmentManager.beginTransaction()
-                        .replace(R.id.container, ProfileFragment.newInstance(position + 1))
+                        .replace(R.id.container, fragment = ProfileFragment.newInstance(position + 1, Sesija.getLogiraniKorisnik().Id))
                         .commit();
+                    Sesija.currentFragment = fragment;
                     break;
                 case 2: fragmentManager.beginTransaction()
-                        .replace(R.id.container, MyBooksFragment.newInstance(position + 1))
+                        .replace(R.id.container, fragment = MyBooksFragment.newInstance(position + 1))
                         .commit();
+                    Sesija.currentFragment = fragment;
                     break;
                 case 3: fragmentManager.beginTransaction()
-                        .replace(R.id.container, RecommendationsFragment.newInstance(position + 1))
+                        .replace(R.id.container, fragment = RecommendationsFragment.newInstance(position + 1))
                         .commit();
+                    Sesija.currentFragment = fragment;
                     break;
                 case 4: fragmentManager.beginTransaction()
-                        .replace(R.id.container, SettingsFragment.newInstance(position + 1))
+                        .replace(R.id.container, fragment = SettingsFragment.newInstance(position + 1))
                         .commit();
+                    Sesija.currentFragment = fragment;
                     break;
                 default: fragmentManager.beginTransaction()
                         .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
@@ -219,7 +252,7 @@ public class MainActivity extends ActionBarActivity
             return true;
         }
         if(id == R.id.search){
-            Toast.makeText(getApplication(), "search kliknut", Toast.LENGTH_SHORT).show();
+            Sesija.UletiDublje(SearchFragment.newInstance(), getSupportFragmentManager());
         }
 
         return super.onOptionsItemSelected(item);
