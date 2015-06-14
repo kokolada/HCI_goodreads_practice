@@ -9,5 +9,6 @@ namespace eShelvesAPI.ViewModels
     {
         public int policaId { get; set; }
         public int knjigaId { get; set; }
+        public int korisnikId { get; set; }
     }
 }
