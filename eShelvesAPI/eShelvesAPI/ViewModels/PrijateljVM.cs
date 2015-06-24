@@ -9,5 +9,7 @@ namespace eShelvesAPI.ViewModels
     {
         public int PrijateljID { get; set; }
         public string username { get; set; }
+        public string imeprezime { get; set; }
+        public string joined { get; set; }
     }
 }

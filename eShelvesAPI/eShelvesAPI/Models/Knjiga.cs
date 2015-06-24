@@ -13,6 +13,7 @@ namespace eShelvesAPI.Models
 		public string Opis { get; set; }
 		public string ISBN { get; set; }
 		public DateTime Objavljena { get; set; }
+        public byte[] Slika { get; set; }
 
 		public int AutorId { get; set; }
 		public Autor Autor { get; set; }
@@ -20,6 +21,5 @@ namespace eShelvesAPI.Models
 		public List<Ocjena> Ocjenas { get; set; }
 		public List<Polica> Policas { get; set; }
 		public List<Kategorija> Kategorijas { get; set; }
-		//slika
 	}
 }

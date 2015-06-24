@@ -23,7 +23,43 @@ namespace eShelvesAPI.Controllers
                 AutorId = x.AutorId,
                 ISBN = x.ISBN,
                 Naslov = x.Naslov,
-                NazivAutora = x.Autor.Ime + " " + x.Autor.Prezime
+                NazivAutora = x.Autor.Ime + " " + x.Autor.Prezime,
+                Slika = x.Slika
+            }).Distinct().ToList());
+
+            return lista;
+        }
+        [HttpGet]
+        [Route("api/Search/{query}")]
+        public List<KnjigaVM> GetKnjigeByParamsDesktopTest(string query)
+        {
+            List<KnjigaVM> lista = new List<KnjigaVM>();
+            lista.AddRange(db.Knjigas.Where(x => (x.Naslov + " " + x.Opis).Contains(query) || (x.Autor.Ime + " " + x.Autor.Prezime).Contains(query)).Select(x => new KnjigaVM
+            {
+                Id = x.Id,
+                AutorId = x.AutorId,
+                ISBN = x.ISBN,
+                Naslov = x.Naslov,
+                NazivAutora = x.Autor.Ime + " " + x.Autor.Prezime,
+                Slika = x.Slika
+            }).Distinct().ToList());
+
+            return lista;
+        }
+
+        [HttpGet]
+        [Route("api/Search/")]
+        public List<KnjigaVM> GetAllKnjige()
+        {
+            List<KnjigaVM> lista = new List<KnjigaVM>();
+            lista.AddRange(db.Knjigas.Select(x => new KnjigaVM
+            {
+                Id = x.Id,
+                AutorId = x.AutorId,
+                ISBN = x.ISBN,
+                Naslov = x.Naslov,
+                NazivAutora = x.Autor.Ime + " " + x.Autor.Prezime,
+                Slika = x.Slika
             }).Distinct().ToList());
 
             return lista;

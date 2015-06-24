@@ -27,7 +27,13 @@ namespace eShelvesAPI.Controllers
         [HttpGet]
         public List<PrijateljVM> GetPrijateljstvosByUserId(int userId)
         {
-            return db.Prijateljstvos.Where(x => x.Korisnik1ID == userId).Select(x => new PrijateljVM {PrijateljID = x.Korisnik2ID, username = x.Korisnik2.username }).ToList();
+            return db.Prijateljstvos.Where(x => x.Korisnik1ID == userId).Select(x => new PrijateljVM
+            {
+                PrijateljID = x.Korisnik2ID,
+                username = x.Korisnik2.username,
+                imeprezime = x.Korisnik2.Ime + " " + x.Korisnik2.Prezime,
+                joined = x.Korisnik2.created_at.Day + "." + x.Korisnik2.created_at.Month + "." + x.Korisnik2.created_at.Year
+            }).ToList();
         }
 
         // GET: api/Prijateljstvoes/5

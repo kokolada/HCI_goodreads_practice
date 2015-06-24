@@ -12,5 +12,6 @@ namespace eShelvesAPI.ViewModels
         public string ISBN { get; set; }
         public int AutorId { get; set; }
         public string NazivAutora { get; set; }
+        public byte[] Slika { get; set; }
     }
 }
