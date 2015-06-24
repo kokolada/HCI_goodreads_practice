@@ -92,7 +92,7 @@ namespace eShelvesAPI.Controllers
 
         [HttpPost]
         [Route("api/Narudzba/Post")]
-        public NarudzbeReklama PostKupac(NarudzbeReklama nr)
+        public NarudzbeReklama PostNarudzba(NarudzbeReklama nr)
         {
             db.NarudzbaReklamas.Add(nr);
             db.SaveChanges();
