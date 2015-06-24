@@ -37,6 +37,19 @@ namespace eShelvesAPI.Controllers
             return Ok(korisnik);
         }
 
+        [HttpGet]
+        [Route("api/Korisniks/SearchKorisnici/{username}")]
+        public List<Korisnik> SearchKorisnici(string username)
+        {
+            return db.Korisnics.Where(x => x.username == username).ToList();
+        }
+        [HttpGet]
+        [Route("api/Korisniks/SearchKorisnici/")]
+        public List<Korisnik> SearchKorisnici()
+        {
+            return db.Korisnics.ToList();
+        }
+
         // PUT: api/Korisniks/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutKorisnik(int id, Korisnik korisnik)

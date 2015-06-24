@@ -18,8 +18,11 @@ namespace eShelvesAPI.DAL
 		public DbSet<Polica> Policas { get; set; }
 		public DbSet<Prijateljstvo> Prijateljstvos { get; set; }
         public DbSet<TimelineItem> TimelineItems { get; set; }
+        public DbSet<Reklama> Reklamas { get; set; }
+        public DbSet<Kupac> Kupacs { get; set; }
+        public DbSet<NarudzbeReklama> NarudzbaReklamas { get; set; }
 
-		public MojContext()
+        public MojContext()
 			: base("Name=MyConnectionString")
 		{
 
