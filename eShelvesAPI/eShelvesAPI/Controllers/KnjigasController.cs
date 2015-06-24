@@ -19,25 +19,46 @@ namespace eShelvesAPI.Controllers
 		private MojContext db = new MojContext();
 
 		// GET: api/Knjigas
-		public IQueryable<Knjiga> GetKnjigas()
+		public List<KnjigaWithKategorijaVM> GetKnjigas()
 		{
-			return db.Knjigas;
+            return db.Knjigas.Select(x => new KnjigaWithKategorijaVM()
+            {
+                Id = x.Id,
+                AutorId = x.AutorId,
+                ISBN = x.ISBN,
+                Kategorijas = x.Kategorijas.Select(z => new KnjigaWithKategorijaVM.KategorijaInfo()
+                {
+                    Id = z.Id,
+                    Naziv = z.Naziv
+                }).ToList(),
+                Naslov = x.Naslov,
+                Objavljena = x.Objavljena,
+                Opis = x.Opis,
+                Slika = x.Slika
+            }).ToList();
 		}
 
-		// GET: api/Knjigas/5
-		[ResponseType(typeof(Knjiga))]
-		public IHttpActionResult GetKnjiga(int id)
-		{
-			Knjiga knjiga = db.Knjigas.Find(id);
-			if (knjiga == null)
-			{
-				return NotFound();
-			}
+        [HttpGet]
+        public KnjigaWithKategorijaVM GetKnjigas(int id)
+        {
+            return db.Knjigas.Select(x => new KnjigaWithKategorijaVM()
+            {
+                Id = x.Id,
+                AutorId = x.AutorId,
+                ISBN = x.ISBN,
+                Kategorijas = x.Kategorijas.Select(z => new KnjigaWithKategorijaVM.KategorijaInfo()
+                {
+                    Id = z.Id,
+                    Naziv = z.Naziv
+                }).ToList(),
+                Naslov = x.Naslov,
+                Objavljena = x.Objavljena,
+                Opis = x.Opis,
+                Slika = x.Slika
+            }).Where(x => x.Id == id).First();
+        }
 
-			return Ok(knjiga);
-		}
-
-		[HttpGet]
+        [HttpGet]
 		public List<Knjiga> GetKnjigasByShelf(int PolicaID)
 		{
 			return db.Policas.Where(x => x.Id == PolicaID).Select(x => x.Knjigas).FirstOrDefault();

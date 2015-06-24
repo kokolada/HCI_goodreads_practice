@@ -58,6 +58,19 @@ namespace eShelvesAPI.Controllers
             }).Single();
         }
 
+        [HttpGet]
+        [Route("api/Ocjenas/{knjigaid}")]
+        public List<KnjigaDetaljiVM.OcjenaInfoVM> GetOcjeneKnjige(int knjigaid)
+        {
+            return db.Ocjenas.Where(v => v.KnjigaID == knjigaid).Select(b => new eShelvesAPI.ViewModels.KnjigaDetaljiVM.OcjenaInfoVM
+            {
+                KorisnikId = b.KorisnikID,
+                Ocjena = b.OcjenaIznos,
+                Opis = b.Opis,
+                username = b.Korisnik.username
+            }).ToList();
+        }
+
         // PUT: api/Ocjenas/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutOcjena(int id, Ocjena ocjena)
