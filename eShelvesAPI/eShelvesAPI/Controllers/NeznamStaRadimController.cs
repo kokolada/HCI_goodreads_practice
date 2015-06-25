@@ -16,8 +16,42 @@ namespace eShelvesAPI.Controllers
         [HttpPost]
         public void AddKnjiga(Knjiga k)
         {
-            db.Knjigas.Add(k);
-            db.SaveChanges();
+            Knjiga b = db.Knjigas.Find(k.Id);
+            if(b != null)
+            {
+                b.Id = k.Id;
+                b.AutorId = k.AutorId;
+                b.ISBN = k.ISBN;
+                b.Kategorijas = k.Kategorijas;
+                b.Naslov = k.Naslov;
+                b.Objavljena = k.Objavljena;
+                b.Opis = k.Opis;
+                if (k.Slika != null)
+                    b.Slika = k.Slika;
+
+                db.SaveChanges();
+            }
+            else
+            {
+                db.Knjigas.Add(k);
+                db.SaveChanges();
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Knjigas/Remove/{id}")]
+        public IHttpActionResult DeleteKnjiga(int id)
+        {
+            Knjiga k = db.Knjigas.Find(id);
+            if(k != null)
+            {
+                db.Knjigas.Remove(k);
+                db.SaveChanges();
+
+                return Ok();
+            }
+
+            return BadRequest();
         }
     }
 }

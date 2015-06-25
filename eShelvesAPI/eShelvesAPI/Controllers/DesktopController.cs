@@ -47,5 +47,30 @@ namespace eShelvesAPI.Controllers
         {
             return db.Kategorijas.ToList();
         }
+
+        [HttpGet]
+        [Route("api/Desktop/Kategorijas/Remove/{id}")]
+        public IHttpActionResult RemoveKategorijaById(int id)
+        {
+            Kategorija k = db.Kategorijas.Find(id);
+            if(k != null)
+            {
+                db.Kategorijas.Remove(k);
+                db.SaveChanges();
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("api/Desktop")]
+        public Kategorija PostKategorija(Kategorija k)
+        {
+            db.Kategorijas.Add(k);
+            db.SaveChanges();
+
+            return k;
+        }
     }
 }
