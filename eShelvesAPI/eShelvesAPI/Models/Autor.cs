@@ -11,14 +11,11 @@ namespace eShelvesAPI.Models
 		public string Ime { get; set; }
 		public string Prezime { get; set; }
 		public DateTime Rodjen { get; set; }
-		public DateTime Umro { get; set; }
+		public DateTime? Umro { get; set; }
 		public string MjestoRodjenja { get; set; }
 		public string WebStranica { get; set; }
 		public string Opis { get; set; }
 
-		//slika
-
-		//pokusaj many to many izmedju autora i kategorija
 		public List<Kategorija> Kategorijas { get; set; }
 	}
 }
