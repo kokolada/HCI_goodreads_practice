@@ -40,12 +40,14 @@ namespace eShelvesAPI.Controllers
             }).FirstOrDefault();
 
             HubPageViewModel.ShelvesInfo.ShelfInfo polica = defaultViewModel.BookShelves.Shelves.Where(x => x.Naziv == "CurrentlyReading").FirstOrDefault();
-            List<Knjiga> curb = db.Policas.Where(p => p.Id == polica.ShelfID).First().Knjigas;
+            Polica p = db.Policas.Include("Knjigas").Where(c => c.Id == polica.ShelfID).FirstOrDefault();
+            List<Knjiga> curb = p.Knjigas;
             if (curb != null)
             {
+                defaultViewModel.Profile.CurrentlyReadingBooks = new List<HubPageViewModel.ProfileInfo.BookInfo>();
                 defaultViewModel.Profile.CurrentlyReadingBooks = curb.Select(k => new HubPageViewModel.ProfileInfo.BookInfo
                 {
-                    Autor = k.Autor.Ime + " " + k.Autor.Prezime,
+                    Autor = "Neki Autor",
                     KnjigaID = k.Id,
                     Naslov = k.Naslov,
                     Slika = k.Slika
