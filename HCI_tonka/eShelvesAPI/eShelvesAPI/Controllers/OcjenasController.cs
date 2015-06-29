@@ -67,8 +67,38 @@ namespace eShelvesAPI.Controllers
                 KorisnikId = b.KorisnikID,
                 Ocjena = b.OcjenaIznos,
                 Opis = b.Opis,
-                username = b.Korisnik.username
+                username = b.Korisnik.username,
+                OcjenaID = b.Id
             }).ToList();
+        }
+        [HttpGet]
+        [Route("api/Ocjenas/user/{userid}")]
+        public List<KnjigaDetaljiVM.OcjenaInfoVM> GetOcjeneUsera(int userid)
+        {
+            return db.Ocjenas.Where(v => v.KorisnikID == userid).Select(b => new eShelvesAPI.ViewModels.KnjigaDetaljiVM.OcjenaInfoVM
+            {
+                KorisnikId = b.KorisnikID,
+                Ocjena = b.OcjenaIznos,
+                Opis = b.Opis,
+                username = b.Korisnik.username,
+                OcjenaID = b.Id
+            }).ToList();
+        }
+
+        [HttpGet]
+        [Route("api/Ocjenas/remove/{id}")]
+        public IHttpActionResult RemoveOcjena(int id)
+        {
+            Ocjena o = db.Ocjenas.Find(id);
+            if (o != null)
+            {
+                db.Ocjenas.Remove(o);
+                db.SaveChanges();
+
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
         // PUT: api/Ocjenas/5
