@@ -22,6 +22,9 @@ namespace eShelvesAPI.ViewModels
                 public string EventDescription { get; set; }
                 public string EventInformation { get; set; }
                 public byte[] Slika { get; set; }
+                public bool IsOcjena { get; set; }
+                public int KnjigaID { get; set; }
+                public int? OcjenaID { get; set; }
             }
         }
 

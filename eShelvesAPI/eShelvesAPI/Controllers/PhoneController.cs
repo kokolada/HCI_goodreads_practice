@@ -80,7 +80,10 @@ namespace eShelvesAPI.Controllers
                 EventDescription = t.EventDescription,
                 FeedItemID = t.Id,
                 Slika = t.Knjiga.Slika,
-                EventInformation = "ovo treba ispraviti"
+                EventInformation = "ovo treba ispraviti",
+                IsOcjena = t.IsOcjena,
+                KnjigaID = t.KnjigaID,
+                OcjenaID = t.Knjiga.Ocjenas.Where(o => o.KnjigaID == t.KnjigaID && o.KorisnikID == t.KorisnikID).FirstOrDefault().Id
             }).ToList();
 
             return defaultViewModel;
@@ -111,6 +114,76 @@ namespace eShelvesAPI.Controllers
             }).FirstOrDefault();
 
             return kdvm;
+        }
+
+        [HttpGet]
+        [Route("api/PhoneProfil/{userid}")]
+        public HubPageViewModel.ProfileInfo GetProfileData(int userid)
+        {
+            HubPageViewModel.ProfileInfo profil = db.Korisnics.Where(x => x.Id == userid).Select(z => new HubPageViewModel.ProfileInfo
+            {
+                KorisnikID = z.Id,
+                username = z.username,
+                Joined = z.created_at,
+                Grad = z.Grad,
+                FriendCount = z.Prijateljstvos.Count()
+            }).FirstOrDefault();
+
+            List<HubPageViewModel.ShelvesInfo.ShelfInfo> police = db.Policas.Where(x => x.KorisnikID == userid).Select(p => new HubPageViewModel.ShelvesInfo.ShelfInfo 
+            {
+                BookCount = p.Knjigas.Count(),
+                KorisnikID = p.KorisnikID,
+                Naziv = p.Naziv,
+                ShelfID = p.Id
+            }).ToList();
+            HubPageViewModel.ShelvesInfo.ShelfInfo polica = police.Where(x => x.Naziv == "CurrentlyReading").FirstOrDefault();
+            if (polica != null)
+            {
+                Polica gk = db.Policas.Include("Knjigas").Where(c => c.Id == polica.ShelfID).FirstOrDefault();
+                List<Knjiga> curb = gk.Knjigas;
+                if (curb != null)
+                {
+                    profil.CurrentlyReadingBooks = new List<HubPageViewModel.ProfileInfo.BookInfo>();
+                    profil.CurrentlyReadingBooks = curb.Select(k => new HubPageViewModel.ProfileInfo.BookInfo
+                    {
+                        Autor = "Neki Autor",
+                        KnjigaID = k.Id,
+                        Naslov = k.Naslov,
+                        Slika = k.Slika
+                    }).ToList();
+                }
+                else
+                    profil.CurrentlyReadingBooks = null;
+            }
+            else
+                profil.CurrentlyReadingBooks = null;
+
+            return profil;
+        }
+
+        [HttpGet]
+        [Route("api/Prijatelj/{id1}/{id2}")]
+        public IHttpActionResult MakeAFriend(int id1, int id2)
+        {
+            Prijateljstvo p = new Prijateljstvo();
+            p.Korisnik1ID = id1;
+            p.Korisnik2ID = id2;
+            p.UputioZahtjevID = id1;
+            p.Status = 0;
+
+            db.Prijateljstvos.Add(p);
+
+            Prijateljstvo pr = new Prijateljstvo();
+            pr.Korisnik1ID = id2;
+            pr.Korisnik2ID = id1;
+            pr.UputioZahtjevID = id1;
+            pr.Status = 0;
+
+            db.Prijateljstvos.Add(pr);
+
+            db.SaveChanges();
+
+            return Ok();
         }
     }
 }

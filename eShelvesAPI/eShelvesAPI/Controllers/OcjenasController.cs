@@ -24,17 +24,30 @@ namespace eShelvesAPI.Controllers
             return db.Ocjenas;
         }
 
-        // GET: api/Ocjenas/5
-        [ResponseType(typeof(Ocjena))]
-        public IHttpActionResult GetOcjena(int id)
+        // GET: api/Ocjenas/Ocjena/5
+        [HttpGet]
+        [Route("api/Ocjenas/Ocjena/{id}")]
+        public OcjenaDetaljiViewModel GetOcjena(int id)
         {
-            Ocjena ocjena = db.Ocjenas.Find(id);
-            if (ocjena == null)
+            return db.Ocjenas.Where(x => x.Id == id).Select(o => new OcjenaDetaljiViewModel
             {
-                return NotFound();
-            }
-
-            return Ok(ocjena);
+                Id = o.Id,
+                KorisnikID = o.KorisnikID,
+                Ocjena = o.OcjenaIznos,
+                Opis = o.Opis,
+                username = o.Korisnik.username,
+                Knjiga = new OcjenaDetaljiViewModel.KnjigaInfo
+                {
+                    AutorID = o.Knjiga.AutorId,
+                    Autor = o.Knjiga.Autor.Ime + " " + o.Knjiga.Autor.Prezime,
+                    ISBN = o.Knjiga.ISBN,
+                    KnjigaID = o.KnjigaID,
+                    Naslov = o.Knjiga.Naslov,
+                    Objavljena = o.Knjiga.Objavljena,
+                    ProsjecnaOcjena = (float)o.Knjiga.Ocjenas.Average(t => t.OcjenaIznos),
+                    Slika = o.Knjiga.Slika
+                }
+            }).FirstOrDefault();
         }
 
         [HttpGet]
