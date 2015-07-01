@@ -22,11 +22,6 @@ namespace eShelvesAPI.Controllers
                 b.Id = k.Id;
                 b.AutorId = k.AutorId;
                 b.ISBN = k.ISBN;
-                // PRIMARY KEY VIOLATION ZBOG KATEGORIJA
-                string[] arr = k.Kategorijas.Select(y => y.Naziv).ToArray();
-                List<Kategorija> kategorije = (from p in db.Kategorijas where arr.Any(x => p.Naziv.Contains(x)) select p).ToList();
-                b.Kategorijas = kategorije;
-
                 b.Naslov = k.Naslov;
                 b.Objavljena = k.Objavljena;
                 b.Opis = k.Opis;
@@ -34,6 +29,15 @@ namespace eShelvesAPI.Controllers
                     b.Slika = k.Slika;
 
                 db.SaveChanges();
+
+                string[] arr = k.Kategorijas.Select(y => y.Naziv).ToArray();
+                List<Kategorija> kategorije = (from p in db.Kategorijas where arr.Any(x => p.Naziv.Contains(x)) select p).ToList();
+                eShelvesEntities ctx = new eShelvesEntities();
+                ctx.usp_RemoveKnjigaKategorijas(b.Id);
+                foreach (Kategorija kat in kategorije)
+                {
+                    ctx.usp_addKnjigaKategorija(b.Id, kat.Id);
+                }
             }
             else
             {

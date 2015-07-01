@@ -85,5 +85,32 @@ namespace eShelvesAPI.Controllers
 
             return defaultViewModel;
         }
+
+        [HttpGet]
+        [Route("api/PhoneKnjigaDetalji/{id}/{userid}")]
+        public KnjigaDetaljiViewModel GetDetalji(int id, int userid)
+        {
+            KnjigaDetaljiViewModel kdvm = db.Knjigas.Where(x => x.Id == id).Select(z => new KnjigaDetaljiViewModel
+            {
+                KnjigaID = z.Id,
+                Naslov = z.Naslov,
+                ISBN = z.ISBN,
+                Objavljena = z.Objavljena,
+                AutorID = z.AutorId,
+                Autor = z.Autor.Ime + " " + z.Autor.Prezime,
+                ProsjecnaOcjena = (float)z.Ocjenas.Average(a => a.OcjenaIznos),
+                Ocjene = z.Ocjenas.Select(o => new KnjigaDetaljiViewModel.OcjenaInfo 
+                {
+                    Ocjena = o.OcjenaIznos,
+                    OcjenaID = o.Id,
+                    Opis = o.Opis,
+                    username = o.Korisnik.username
+                }).ToList(),
+                Slika = z.Slika,
+                OcjenaLogiranogKorisnika = z.Ocjenas.Where(g => g.KorisnikID == userid).FirstOrDefault().OcjenaIznos
+            }).FirstOrDefault();
+
+            return kdvm;
+        }
     }
 }

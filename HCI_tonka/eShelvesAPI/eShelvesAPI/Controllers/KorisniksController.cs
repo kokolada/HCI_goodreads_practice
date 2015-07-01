@@ -94,8 +94,22 @@ namespace eShelvesAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Korisnics.Add(korisnik);
-            db.SaveChanges();
+            if (korisnik.Id > 0)
+            {
+                Korisnik k = db.Korisnics.Find(korisnik.Id);
+                k.Grad = korisnik.Grad;
+                k.created_at = korisnik.created_at;
+                k.Email = korisnik.Email;
+                k.Ime = korisnik.Ime;
+                k.Prezime = korisnik.Prezime;
+                k.Spol = korisnik.Spol;
+                db.SaveChanges();
+            }
+            else
+            {
+                db.Korisnics.Add(korisnik);
+                db.SaveChanges();
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = korisnik.Id }, korisnik);
         }
