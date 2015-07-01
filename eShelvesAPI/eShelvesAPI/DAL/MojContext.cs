@@ -21,6 +21,7 @@ namespace eShelvesAPI.DAL
         public DbSet<Reklama> Reklamas { get; set; }
         public DbSet<Kupac> Kupacs { get; set; }
         public DbSet<NarudzbeReklama> NarudzbaReklamas { get; set; }
+        public DbSet<Administrator> Administrators { get; set; }
 
         public MojContext()
 			: base("Name=MyConnectionString")
