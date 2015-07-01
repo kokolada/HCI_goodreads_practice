@@ -221,6 +221,7 @@
     <Compile Include="ViewModels\KnjigaPolicaVM.cs" />
     <Compile Include="ViewModels\KnjigaVM.cs" />
     <Compile Include="ViewModels\KnjigaWithKategorijaVM.cs" />
+    <Compile Include="ViewModels\OcjenaDetaljiViewModel.cs" />
     <Compile Include="ViewModels\OcjenaVM.cs" />
     <Compile Include="ViewModels\PolicaWM.cs" />
     <Compile Include="ViewModels\PrijateljVM.cs" />
