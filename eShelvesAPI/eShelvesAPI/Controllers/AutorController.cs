@@ -62,9 +62,36 @@ namespace eShelvesAPI.Controllers
         [HttpPost]
         public Autor PostAutor(Autor a)
         {
-            db.Autors.Add(a);
-            db.SaveChanges();
+            if (a.Id > 0)
+            {
+                Autor stari = db.Autors.Find(a.Id);
+                stari.Ime = a.Ime;
+                stari.Prezime = a.Prezime;
+                stari.Rodjen = a.Rodjen;
+                stari.MjestoRodjenja = a.MjestoRodjenja;
+                stari.Opis = a.Opis;
+                stari.Umro = a.Umro;
+                stari.WebStranica = a.WebStranica;
+                db.SaveChanges();
 
+                string[] arr = a.Kategorijas.Select(y => y.Naziv).ToArray();
+                List<Kategorija> kategorije = (from p in db.Kategorijas where arr.Any(x => p.Naziv.Contains(x)) select p).ToList();
+                eShelvesEntities ctx = new eShelvesEntities();
+                ctx.usp_RemoveAutorKategorijas(stari.Id);
+                foreach (Kategorija kat in kategorije)
+                {
+                    ctx.usp_addAutorKategorija(kat.Id, stari.Id);
+                }
+            }
+            else
+            {
+                string[] arr = a.Kategorijas.Select(y => y.Naziv).ToArray();
+                List<Kategorija> kategorije = (from p in db.Kategorijas where arr.Any(x => p.Naziv.Contains(x)) select p).ToList();
+                a.Kategorijas = kategorije;
+                db.Autors.Add(a);
+                db.SaveChanges();
+            }
+            
             return a;
         }
     }
