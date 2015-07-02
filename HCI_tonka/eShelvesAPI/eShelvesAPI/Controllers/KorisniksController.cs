@@ -41,7 +41,8 @@ namespace eShelvesAPI.Controllers
         [Route("api/Korisniks/SearchKorisnici/{username}")]
         public List<Korisnik> SearchKorisnici(string username)
         {
-            return db.Korisnics.Where(x => x.username == username).ToList();
+            var tokens = username.Split(' ');
+            return db.Korisnics.Where(x => tokens.All(t => x.username.Contains(t))).ToList();
         }
         [HttpGet]
         [Route("api/Korisniks/SearchKorisnici/")]

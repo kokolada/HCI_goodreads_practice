@@ -33,8 +33,9 @@ namespace eShelvesAPI.Controllers
         [Route("api/Search/{query}")]
         public List<KnjigaVM> GetKnjigeByParamsDesktopTest(string query)
         {
+            var tokens = query.Split(' ');
             List<KnjigaVM> lista = new List<KnjigaVM>();
-            lista.AddRange(db.Knjigas.Where(x => (x.Naslov + " " + x.Opis).Contains(query) || (x.Autor.Ime + " " + x.Autor.Prezime).Contains(query)).Select(x => new KnjigaVM
+            lista.AddRange(db.Knjigas.Where(x => tokens.All(t => x.Naslov.Contains(t)) || tokens.All(t => (x.Autor.Ime + " " + x.Autor.Prezime).Contains(t))).Select(x => new KnjigaVM
             {
                 Id = x.Id,
                 AutorId = x.AutorId,
