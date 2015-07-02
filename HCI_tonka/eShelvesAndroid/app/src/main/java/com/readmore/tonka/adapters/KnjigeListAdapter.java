@@ -50,22 +50,9 @@ public class KnjigeListAdapter extends ArrayAdapter<Knjiga> {
         autor.setText(Neki.NazivAutora);
 
         if(Neki.Slika != null){
-            //byte[] Pic = Neki.Slika.getBytes();
-            final NetworkImageView image = (NetworkImageView) view.findViewById(R.id.slikaknjige);
-            //image.setImageBitmap(BitmapFactory.decodeByteArray(Pic, 0, Pic.length));
-            RequestQueue rq = Volley.newRequestQueue(getContext());
-            ImageRequest ir = new ImageRequest(Config.urlApi + "Images?knjigaId=" + Neki.Id, new Response.Listener<Bitmap>() {
-                @Override
-                public void onResponse(Bitmap response) {
-                    image.setImageBitmap(response);
-                }
-            }, 0, 0, null, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getContext(), error.getMessage()+"greska", Toast.LENGTH_SHORT).show();
-                }
-            });
-            rq.add(ir);
+            byte[] Pic = Neki.Slika.getBytes();
+            final ImageView image = (ImageView) view.findViewById(R.id.slikaknjige);
+            image.setImageBitmap(BitmapFactory.decodeByteArray(Pic, 0, Pic.length));
         }
 
         return view;
