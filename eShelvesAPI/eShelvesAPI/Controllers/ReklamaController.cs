@@ -24,8 +24,34 @@ namespace eShelvesAPI.Controllers
         [Route("api/Reklama/RandomAktivna")]
         public Reklama GetRandomAktivnuReklamu()
         {
-            return db.Reklamas.First();
-            //ovo doraditi
+            NarudzbeReklama narudzbe;
+            narudzbe = db.NarudzbaReklamas.Where(
+                x => x.Reklama.PocetakPrikazivanja.AddDays(x.Reklama.TrajanjeDana).ToShortDateString() == DateTime.Now.AddDays(1).ToShortDateString()
+                && x.BrojPrikaza > 0).OrderByDescending(t => t.BrojPrikaza).FirstOrDefault();
+
+            if (narudzbe != null)
+            {
+                narudzbe.BrojPrikaza--;
+                db.SaveChanges();
+                return narudzbe.Reklama;
+            }
+
+            narudzbe = db.NarudzbaReklamas.Where(
+                x => (x.Reklama.PocetakPrikazivanja.AddDays(x.Reklama.TrajanjeDana).Date - DateTime.Now.AddDays(7).Date).TotalDays <= 7
+                && x.BrojPrikaza > 0).OrderByDescending(t => t.BrojPrikaza).FirstOrDefault();
+
+            if (narudzbe != null)
+            {
+                narudzbe.BrojPrikaza--;
+                db.SaveChanges();
+                return narudzbe.Reklama;
+            }
+            
+            narudzbe = db.NarudzbaReklamas.Where(x => x.Reklama.PocetakPrikazivanja.AddDays(x.Reklama.TrajanjeDana) > DateTime.Now && x.BrojPrikaza > 0).OrderByDescending(o => o.BrojPrikaza).FirstOrDefault();
+            narudzbe.BrojPrikaza--;
+            db.SaveChanges();
+
+            return narudzbe.Reklama;
         }
 
         [HttpGet]
