@@ -185,5 +185,36 @@ namespace eShelvesAPI.Controllers
 
             return Ok();
         }
+
+        [HttpGet]
+        [Route("api/Police/{id}")]
+        public PolicaDetaljiViewModel GetPolica(int id)
+        {
+            PolicaDetaljiViewModel model = db.Policas.Where(x => x.Id == id).Select(p => new PolicaDetaljiViewModel
+            {
+                Naziv = p.Naziv,
+                PolicaID = p.Id,
+                Knjige = p.Knjigas.Select(k => new PolicaDetaljiViewModel.KnjigaInfo 
+                {
+                    KnjigaID = k.Id,
+                    Naslov = k.Naslov,
+                    Autor = k.Autor.Ime + " " + k.Autor.Prezime,
+                    Slika = k.Slika
+                }).ToList()
+            }).FirstOrDefault();
+
+            foreach (var item in model.Knjige)
+            {
+                List<Ocjena> ocjene = db.Knjigas.Where(x => x.Id == item.KnjigaID).Select(o => o.Ocjenas).FirstOrDefault();
+                if (ocjene != null && ocjene.Count > 0)
+                    item.ProsjecnaOcjena = (float)ocjene.Average(t => t.OcjenaIznos);
+                else
+                {
+                    item.ProsjecnaOcjena = 0;
+                }
+            }
+
+            return model;
+        }
     }
 }
