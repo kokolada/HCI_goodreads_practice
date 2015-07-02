@@ -13,4 +13,5 @@ public class Knjiga implements Serializable{
     public String ISBN;
     public int AutorID;
     public String NazivAutora;
+    public String Slika;
 }

@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.android.volley.toolbox.NetworkImageView
-        android:layout_width="70dp"
-        android:layout_height="90dp"
-        android:id="@+id/slikaknjige"
-        android:background="@color/primary_dark_material_dark">
-    </com.android.volley.toolbox.NetworkImageView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@android:color/holo_blue_dark"
+        android:id="@+id/friendUsername"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:layout_marginBottom="4dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:id="@+id/BookTitle"
+            android:id="@+id/imeiprezime"
             android:textColor="@android:color/black"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/BookAuthor"/>
+            android:textColor="@android:color/black"
+            android:id="@+id/joined"/>
 
     </LinearLayout>
 
