@@ -1,13 +1,16 @@
 package com.readmore.tonka.adapters;
 
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.readmore.tonka.eshelvesnavdrawer.ProfileFragment;
 import com.readmore.tonka.eshelvesnavdrawer.R;
+import com.readmore.tonka.helpers.Sesija;
 import com.readmore.tonka.models.Polica;
 import com.readmore.tonka.models.Prijatelj;
 
@@ -17,7 +20,7 @@ import com.readmore.tonka.models.Prijatelj;
 public class PrijateljiAdapter extends ArrayAdapter<Prijatelj> {
 
     public PrijateljiAdapter(Context context, Prijatelj[] values) {
-        super(context, R.layout.timeline_list_item, values);
+        super(context, R.layout.friends_list_item, values);
     }
 
 
@@ -25,13 +28,18 @@ public class PrijateljiAdapter extends ArrayAdapter<Prijatelj> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
-        View view = inflater.inflate(R.layout.polica_list_item, parent, false);
+        View view = inflater.inflate(R.layout.friends_list_item, parent, false);
 
-        Prijatelj Neki = getItem(position);
+        final Prijatelj Neki = getItem(position);
 
-        TextView theTextView = (TextView) view.findViewById(R.id.policaNaziv);
-
+        TextView theTextView = (TextView) view.findViewById(R.id.friendUsername);
         theTextView.setText(Neki.username);
+
+        TextView imeIPrezime = (TextView) view.findViewById(R.id.imeiprezime);
+        imeIPrezime.setText(Neki.imeprezime);
+
+        TextView joined = (TextView) view.findViewById(R.id.joined);
+        joined.setText(Neki.joined);
 
         return view;
     }

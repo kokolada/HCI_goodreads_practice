@@ -6,4 +6,6 @@ package com.readmore.tonka.models;
 public class Prijatelj {
     public int PrijateljID;
     public String username;
+    public String imeprezime;
+    public String joined;
 }

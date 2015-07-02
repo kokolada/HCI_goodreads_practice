@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.readmore.tonka.activities.PolicaDetailsActivity;
@@ -79,7 +80,7 @@ public class ProfileFragment extends Fragment{
                 @Override
                 public void onResponse(Korisnik response) {
                     details.setText(response.Ime + " " + response.Prezime + ", " + response.Grad);
-                    joined.setText(response.created_at.toString());
+                    joined.setText("Joined: " + new SimpleDateFormat("dd.MM.yyyy").format(response.created_at));
                 }
             }, null, new BasicNameValuePair("id", korisnikId+""));
         }
