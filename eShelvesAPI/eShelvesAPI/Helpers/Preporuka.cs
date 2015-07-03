@@ -55,6 +55,7 @@ namespace eShelvesAPI.Helpers
                 Id = x.Id,
                 ISBN = x.ISBN,
                 Naslov = x.Naslov,
+                Slika = x.Slika,
                 NazivAutora = db.Autors.Find(x.AutorId).Ime + " " + db.Autors.Find(x.AutorId).Prezime
             }).ToList();
             return kvm;
@@ -62,8 +63,6 @@ namespace eShelvesAPI.Helpers
 
         private bool SuPrijatelji(int id1, int id2)
         {
-            if (id1 > id2)
-                return db.Prijateljstvos.Where(x => x.Korisnik2ID == id1 && x.Korisnik1ID == id2).Count() > 0;
             return db.Prijateljstvos.Where(x => x.Korisnik1ID == id1 && x.Korisnik2ID == id2).Count() > 0;
         }
 
@@ -86,6 +85,8 @@ namespace eShelvesAPI.Helpers
                     zajednicke2.Add(ocjene2.Where(x => x.KnjigaID == o.KnjigaID).First());
                 }
             }
+            if (zajednicke1.Count == 0)
+                return 0;
 
             double prosjek1 = zajednicke1.Average(x => x.OcjenaIznos);
             double prosjek2 = zajednicke2.Average(x => x.OcjenaIznos);

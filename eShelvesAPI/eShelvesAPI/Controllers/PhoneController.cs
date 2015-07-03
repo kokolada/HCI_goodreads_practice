@@ -30,31 +30,34 @@ namespace eShelvesAPI.Controllers
             }).ToList();
 
             defaultViewModel.Profile = new HubPageViewModel.ProfileInfo();
-            defaultViewModel.Profile = db.Korisnics.Where(x => x.Id == userid).Select(z => new HubPageViewModel.ProfileInfo
+            defaultViewModel.Profile = db.Korisnics.Include("Prijateljstvos").Where(x => x.Id == userid).Select(z => new HubPageViewModel.ProfileInfo
             {
                 KorisnikID = z.Id,
                 username = z.username,
                 Joined = z.created_at,
                 Grad = z.Grad,
-                FriendCount = z.Prijateljstvos.Count()
+                FriendCount = db.Prijateljstvos.Where(p => p.Korisnik1ID == userid).Count()
             }).FirstOrDefault();
 
-            HubPageViewModel.ShelvesInfo.ShelfInfo polica = defaultViewModel.BookShelves.Shelves.Where(x => x.Naziv == "CurrentlyReading").FirstOrDefault();
-            Polica p = db.Policas.Include("Knjigas").Where(c => c.Id == polica.ShelfID).FirstOrDefault();
-            List<Knjiga> curb = p.Knjigas;
-            if (curb != null)
+            HubPageViewModel.ShelvesInfo.ShelfInfo polica = defaultViewModel.BookShelves.Shelves.Where(x => x.Naziv == "Currently Reading").FirstOrDefault();
+            if (polica != null)
             {
-                defaultViewModel.Profile.CurrentlyReadingBooks = new List<HubPageViewModel.ProfileInfo.BookInfo>();
-                defaultViewModel.Profile.CurrentlyReadingBooks = curb.Select(k => new HubPageViewModel.ProfileInfo.BookInfo
+                Polica p = db.Policas.Include("Knjigas").Where(c => c.Id == polica.ShelfID).FirstOrDefault();
+                List<Knjiga> curb = p.Knjigas;
+                if (curb != null)
                 {
-                    Autor = "Neki Autor",
-                    KnjigaID = k.Id,
-                    Naslov = k.Naslov,
-                    Slika = k.Slika
-                }).ToList();
+                    defaultViewModel.Profile.CurrentlyReadingBooks = new List<HubPageViewModel.ProfileInfo.BookInfo>();
+                    defaultViewModel.Profile.CurrentlyReadingBooks = curb.Select(k => new HubPageViewModel.ProfileInfo.BookInfo
+                    {
+                        Autor = "Neki Autor",
+                        KnjigaID = k.Id,
+                        Naslov = k.Naslov,
+                        Slika = k.Slika
+                    }).ToList();
+                }
+                else
+                    defaultViewModel.Profile.CurrentlyReadingBooks = null;
             }
-            else
-                defaultViewModel.Profile.CurrentlyReadingBooks = null;
 
             Helpers.Preporuka preporuka = new Helpers.Preporuka();
             List<KnjigaVM> preporuceneKnjige = preporuka.GetPreporuceneKnjige(userid);
@@ -74,14 +77,17 @@ namespace eShelvesAPI.Controllers
                 k.ProsjecnaOcjena = (float)kk.Ocjenas.Average(a => a.OcjenaIznos);
             }
 
+            List<int> ListaPrijatelja = db.Prijateljstvos.Where(x => x.Korisnik1ID == userid).Select(s => s.Korisnik2ID).ToList();
+
             defaultViewModel.Feed = new HubPageViewModel.FeedInfo();
-            defaultViewModel.Feed.FeedItems = db.TimelineItems.Select(t => new HubPageViewModel.FeedInfo.FeedItemInfo
+            defaultViewModel.Feed.FeedItems = db.TimelineItems.Where(g => ListaPrijatelja.All(l => l == g.Id)).Select(t => new HubPageViewModel.FeedInfo.FeedItemInfo
             {
-                EventDescription = t.EventDescription,
+                EventDescription = t.Korisnik.username + t.EventDescription + " " + t.Knjiga.Ocjenas.Where(o => o.KnjigaID == t.KnjigaID && o.KorisnikID == t.KorisnikID).FirstOrDefault().OcjenaIznos,
                 FeedItemID = t.Id,
                 Slika = t.Knjiga.Slika,
-                EventInformation = "ovo treba ispraviti",
+                EventInformation = t.Knjiga.Naslov,
                 IsOcjena = t.IsOcjena,
+                Autor = t.Knjiga.Autor.Ime + " " + t.Knjiga.Autor.Prezime,
                 KnjigaID = t.KnjigaID,
                 OcjenaID = t.Knjiga.Ocjenas.Where(o => o.KnjigaID == t.KnjigaID && o.KorisnikID == t.KorisnikID).FirstOrDefault().Id
             }).ToList();
