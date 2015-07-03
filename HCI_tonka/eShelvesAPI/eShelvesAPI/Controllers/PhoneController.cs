@@ -113,14 +113,20 @@ namespace eShelvesAPI.Controllers
                 OcjenaLogiranogKorisnika = z.Ocjenas.Where(g => g.KorisnikID == userid).FirstOrDefault().OcjenaIznos
             }).FirstOrDefault();
 
+            int test = db.Knjigas.Where(k => k.Id == kdvm.KnjigaID && k.Policas.Where(p => p.KorisnikID == userid).FirstOrDefault() != null).Count();
+            kdvm.IsInPolica = test > 0;
+
+            if (kdvm.IsInPolica)
+                kdvm.PolicaID = db.Policas.Where(p => p.KorisnikID == userid && p.Knjigas.Where(k => k.Id == kdvm.KnjigaID).Count() > 0).FirstOrDefault().Id;
+
             return kdvm;
         }
 
         [HttpGet]
-        [Route("api/PhoneProfil/{userid}")]
-        public HubPageViewModel.ProfileInfo GetProfileData(int userid)
+        [Route("api/PhoneProfil/{id}/{userid}")]
+        public HubPageViewModel.ProfileInfo GetProfileData(int id, int userid)
         {
-            HubPageViewModel.ProfileInfo profil = db.Korisnics.Where(x => x.Id == userid).Select(z => new HubPageViewModel.ProfileInfo
+            HubPageViewModel.ProfileInfo profil = db.Korisnics.Where(x => x.Id == id).Select(z => new HubPageViewModel.ProfileInfo
             {
                 KorisnikID = z.Id,
                 username = z.username,
@@ -129,7 +135,10 @@ namespace eShelvesAPI.Controllers
                 FriendCount = z.Prijateljstvos.Count()
             }).FirstOrDefault();
 
-            List<HubPageViewModel.ShelvesInfo.ShelfInfo> police = db.Policas.Where(x => x.KorisnikID == userid).Select(p => new HubPageViewModel.ShelvesInfo.ShelfInfo 
+            int br = db.Prijateljstvos.Where(x => x.Korisnik1ID == userid && x.Korisnik2ID == id).Count();
+            profil.IsFriend = br > 0;
+
+            List<HubPageViewModel.ShelvesInfo.ShelfInfo> police = db.Policas.Where(x => x.KorisnikID == id).Select(p => new HubPageViewModel.ShelvesInfo.ShelfInfo 
             {
                 BookCount = p.Knjigas.Count(),
                 KorisnikID = p.KorisnikID,
@@ -215,6 +224,19 @@ namespace eShelvesAPI.Controllers
             }
 
             return model;
+        }
+        
+        [HttpGet]
+        [Route("api/Police/All/{userid}")]
+        public List<HubPageViewModel.ShelvesInfo.ShelfInfo> GetPoliceByKorisnik(int userid)
+        {
+            return db.Policas.Where(x => x.KorisnikID == userid).Select(y => new HubPageViewModel.ShelvesInfo.ShelfInfo
+            {
+                KorisnikID = y.KorisnikID,
+                Naziv = y.Naziv,
+                ShelfID = y.Id,
+                BookCount = y.Knjigas.Count()
+            }).ToList();
         }
     }
 }
