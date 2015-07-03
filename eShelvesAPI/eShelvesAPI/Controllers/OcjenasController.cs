@@ -164,6 +164,63 @@ namespace eShelvesAPI.Controllers
             return CreatedAtRoute("DefaultApi", new { id = ocjena.Id }, ocjena);
         }*/
 
+        [HttpGet]
+        [Route("api/Ocjenass/{knjigaid}/{userid}")]
+        public OcjeniKnjiguPageViewModel GetOcjenaWP(int knjigaid, int userid)
+        {
+            OcjeniKnjiguPageViewModel model = db.Ocjenas.Include("Knjiga").Where(x => x.KorisnikID == userid && x.KnjigaID == knjigaid).Select(o => new OcjeniKnjiguPageViewModel
+            {
+                KnjigaID = o.KnjigaID,
+                Naslov = o.Knjiga.Naslov,
+                OcjenaID = o.Id,
+                OcjenaIznos = o.OcjenaIznos,
+                Opis = o.Opis,
+                KorisnikID = o.KorisnikID
+            }).FirstOrDefault();
+
+            if (model == null)
+            {
+                model = new OcjeniKnjiguPageViewModel();
+                model.KnjigaID = knjigaid;
+                model.KorisnikID = userid;
+                Knjiga k = db.Knjigas.Find(knjigaid);
+                model.Naslov = k.Naslov;
+            }
+
+            return model;
+        }
+
+        [HttpPost]
+        [Route("api/Ocjenass")]
+        public void PostOcjenaWP(Ocjena o)
+        {
+            if (o.Id > 0)
+            {
+                Ocjena original = db.Ocjenas.Find(o.Id);
+                original.DatumOcjene = DateTime.Now;
+                original.OcjenaIznos = o.OcjenaIznos;
+                original.Opis = o.Opis;
+
+                db.SaveChanges();
+            }
+            else
+            {
+                o.DatumOcjene = DateTime.Now;
+                db.Ocjenas.Add(o);
+                db.SaveChanges();
+
+                TimelineItem t = new TimelineItem();
+                t.EventDate = DateTime.Now;
+                t.EventDescription = " je ocjenio ";
+                t.IsOcjena = true;
+                t.KnjigaID = o.KnjigaID;
+                t.KorisnikID = o.KorisnikID;
+
+                db.TimelineItems.Add(t);
+                db.SaveChanges();
+            }
+        }
+
         [HttpPost]
         public OcjenaVM PostOcjena(OcjenaVM ocjena)
         {
