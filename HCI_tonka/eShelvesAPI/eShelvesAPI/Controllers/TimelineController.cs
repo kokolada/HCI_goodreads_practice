@@ -27,7 +27,7 @@ namespace eShelvesAPI.Controllers
                 Naslov = x.Knjiga.Naslov,
                 Ocjena = db.Ocjenas.Where(z => z.KnjigaID == x.KnjigaID && z.KorisnikID == x.KorisnikID).FirstOrDefault().OcjenaIznos,
                 username = x.Korisnik.username
-            }).ToList();
+            }).OrderByDescending(o => o.EventDate).ToList();
         }
     }
 }
