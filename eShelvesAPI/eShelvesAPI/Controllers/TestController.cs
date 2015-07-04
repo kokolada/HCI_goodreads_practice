@@ -16,8 +16,9 @@ namespace eShelvesAPI.Controllers
 		MojContext ctx = new MojContext();
 		public LogiraniKorisnik Get(string username, string password)
 		{
+            string novi = KorisniciHelper.GenerateHash(password, "nema");
 			LogiraniKorisnik k = ctx.Korisnics.Where(x => x.username == username)
-				.Where(y => y.password == KorisniciHelper.GenerateHash(password, "nema")).Select(x => new LogiraniKorisnik
+				.Where(y => y.password == novi).Select(x => new LogiraniKorisnik
 				{
 					Id = x.Id,
 					Ime = x.Ime,
