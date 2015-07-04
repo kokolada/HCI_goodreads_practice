@@ -1,4 +1,5 @@
 ﻿using eShelvesAPI.DAL;
+using eShelvesAPI.Helpers;
 using eShelvesAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -12,19 +13,11 @@ namespace eShelvesAPI.Controllers
 {
 	public class TestController : ApiController
 	{
-		/*public HttpResponseMessage Get()
-		{
-			string result = "Hello world! Time is";
-			var resp = new HttpResponseMessage(HttpStatusCode.OK);
-			resp.Content = new StringContent(result, Encoding.UTF8, "text/plain");
-			return resp;
-
-		}*/
 		MojContext ctx = new MojContext();
 		public LogiraniKorisnik Get(string username, string password)
 		{
 			LogiraniKorisnik k = ctx.Korisnics.Where(x => x.username == username)
-				.Where(y => y.password == password).Select(x => new LogiraniKorisnik
+				.Where(y => y.password == KorisniciHelper.GenerateHash(password, "nema")).Select(x => new LogiraniKorisnik
 				{
 					Id = x.Id,
 					Ime = x.Ime,

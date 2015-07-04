@@ -108,6 +108,7 @@ namespace eShelvesAPI.Controllers
             }
             else
             {
+                korisnik.password = KorisniciHelper.GenerateHash(korisnik.password, "nema");
                 db.Korisnics.Add(korisnik);
                 db.SaveChanges();
             }
