@@ -20,7 +20,7 @@ namespace eShelvesAPI.ViewModels
         {
             public int KnjigaID { get; set; }
             public string Naslov { get; set; }
-            public float ProsjecnaOcjena { get; set; }
+            public float? ProsjecnaOcjena { get; set; }
             public byte[] Slika { get; set; }
         }
     }
