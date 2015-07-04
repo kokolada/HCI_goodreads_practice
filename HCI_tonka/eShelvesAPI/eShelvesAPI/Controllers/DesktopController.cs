@@ -72,5 +72,12 @@ namespace eShelvesAPI.Controllers
 
             return k;
         }
+
+        [HttpGet]
+        [Route("api/Username/{username}")]
+        public bool IsUnique(string username)
+        {
+            return !(db.Korisnics.Where(k => k.username == username).Count() > 0);
+        }
     }
 }
