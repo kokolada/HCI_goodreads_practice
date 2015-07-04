@@ -48,6 +48,8 @@ namespace eShelvesAPI.ViewModels
             public string username { get; set; }
             public string Grad { get; set; }
             public DateTime Joined { get; set; }
+            public string ImePrezime { get; set; }
+            public string Email { get; set; }
 
             public bool IsFriend { get; set; }
 

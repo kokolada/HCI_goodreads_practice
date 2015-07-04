@@ -36,7 +36,9 @@ namespace eShelvesAPI.Controllers
                 username = z.username,
                 Joined = z.created_at,
                 Grad = z.Grad,
-                FriendCount = db.Prijateljstvos.Where(p => p.Korisnik1ID == userid).Count()
+                FriendCount = db.Prijateljstvos.Where(p => p.Korisnik1ID == userid).Count(),
+                Email = z.Email,
+                ImePrezime = z.Ime + " " + z.Prezime
             }).FirstOrDefault();
 
             HubPageViewModel.ShelvesInfo.ShelfInfo polica = defaultViewModel.BookShelves.Shelves.Where(x => x.Naziv == "Currently Reading").FirstOrDefault();
@@ -49,7 +51,7 @@ namespace eShelvesAPI.Controllers
                     defaultViewModel.Profile.CurrentlyReadingBooks = new List<HubPageViewModel.ProfileInfo.BookInfo>();
                     defaultViewModel.Profile.CurrentlyReadingBooks = curb.Select(k => new HubPageViewModel.ProfileInfo.BookInfo
                     {
-                        Autor = "Neki Autor",
+                        Autor = db.Autors.Find(k.AutorId).Ime + " " + db.Autors.Find(k.AutorId).Prezime,
                         KnjigaID = k.Id,
                         Naslov = k.Naslov,
                         Slika = k.Slika
@@ -87,7 +89,7 @@ namespace eShelvesAPI.Controllers
                 Slika = t.Knjiga.Slika,
                 EventInformation = t.Knjiga.Naslov,
                 IsOcjena = t.IsOcjena,
-                Autor = t.Knjiga.Autor.Ime + " " + t.Knjiga.Autor.Prezime,
+                Autor = t.EventDate.ToString(),
                 KnjigaID = t.KnjigaID,
                 OcjenaID = t.Knjiga.Ocjenas.Where(o => o.KnjigaID == t.KnjigaID && o.KorisnikID == t.KorisnikID).FirstOrDefault().Id
             }).ToList();
@@ -138,7 +140,9 @@ namespace eShelvesAPI.Controllers
                 username = z.username,
                 Joined = z.created_at,
                 Grad = z.Grad,
-                FriendCount = z.Prijateljstvos.Count()
+                FriendCount = z.Prijateljstvos.Count(),
+                ImePrezime = z.Ime + " " + z.Prezime,
+                Email = z.Email
             }).FirstOrDefault();
 
             int br = db.Prijateljstvos.Where(x => x.Korisnik1ID == userid && x.Korisnik2ID == id).Count();
@@ -151,7 +155,7 @@ namespace eShelvesAPI.Controllers
                 Naziv = p.Naziv,
                 ShelfID = p.Id
             }).ToList();
-            HubPageViewModel.ShelvesInfo.ShelfInfo polica = police.Where(x => x.Naziv == "CurrentlyReading").FirstOrDefault();
+            HubPageViewModel.ShelvesInfo.ShelfInfo polica = police.Where(x => x.Naziv == "Currently Reading").FirstOrDefault();
             if (polica != null)
             {
                 Polica gk = db.Policas.Include("Knjigas").Where(c => c.Id == polica.ShelfID).FirstOrDefault();
