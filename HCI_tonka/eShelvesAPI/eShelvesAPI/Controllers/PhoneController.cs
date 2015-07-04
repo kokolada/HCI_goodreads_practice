@@ -248,5 +248,29 @@ namespace eShelvesAPI.Controllers
                 BookCount = y.Knjigas.Count()
             }).ToList();
         }
+
+        [HttpGet]
+        [Route("api/AutorPhone/{id}")]
+        public AutorPageViewModel GetAutor(int id)
+        {
+            AutorPageViewModel autor = db.Autors.Where(x => x.Id == id).Select(a => new AutorPageViewModel
+            {
+                Grad = a.MjestoRodjenja,
+                Id = a.Id,
+                Naziv = a.Ime + " " + a.Prezime,
+                Opis = a.Opis,
+                Rodjen = a.Rodjen,
+                WebStranica = a.WebStranica,
+                Knjige = db.Knjigas.Where(k => k.AutorId == a.Id).Select(o => new AutorPageViewModel.KnjigaInfo 
+                {
+                    KnjigaID = o.Id,
+                    Naslov = o.Naslov,
+                    ProsjecnaOcjena = (float)o.Ocjenas.Average(t => t.OcjenaIznos),
+                    Slika = o.Slika
+                }).ToList()
+            }).FirstOrDefault();
+
+            return autor;
+        }
     }
 }
