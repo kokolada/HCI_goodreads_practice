@@ -16,14 +16,17 @@ namespace eShelvesAPI.Helpers
         public List<KnjigaVM> GetPreporuceneKnjige(int korisnikId)
         {
             Korisnik k = db.Korisnics.Where(x => x.Id == korisnikId).First();
-            List<Korisnik> korisnici = db.Korisnics.Where(x => x.Id != korisnikId && x.Ocjenas.Count() > 0).ToList();
+            List<Korisnik> korisnici = db.Korisnics.Include("Ocjenas").Where(x => x.Id != korisnikId && x.Ocjenas.Count() > 0).ToList();
 
             Dictionary<int, double> slicnosti = new Dictionary<int, double>();
             
             foreach (Korisnik i in korisnici)
             {
                 double slicnost = IzracunajSlicnostKorisnika(k, i);
-                if (/*slicnost > 0.2 ||*/ SuPrijatelji(k.Id, i.Id))
+                //ovde moze samo slicni, ali sam stavio ili prijatelji iz sljedeceg razloga
+                // mislim da bi bilo dobro da korisnik dobiva za preporuku knjige koje se njihovim prijateljima svidjaju, iako mozda
+                // korisnik i njegov prijatelj nisu slicni... bez obzira na to algoritam za preporuku bi trebao biti ispravan!
+                if (slicnost > 0.2 || SuPrijatelji(k.Id, i.Id))
                 {
                     if(Double.IsNaN(slicnost))
                         slicnosti.Add(i.Id ,0);
@@ -35,7 +38,6 @@ namespace eShelvesAPI.Helpers
             var l = slicnosti.OrderByDescending(x => x.Value);
             Dictionary<int, double> sortirani = l.ToDictionary((keyItem) => keyItem.Key, (valueItem) => valueItem.Value);
 
-            //ovde napuniti listu knjiga sa knjigama od svakog korisnika koje je najvise ocjenio, a nas korisnik ih nije ocjenio nikako
             List<Knjiga> preporuceneKnjige = new List<Knjiga>();
             
             //proci kroz svakog korisnika
@@ -45,7 +47,7 @@ namespace eShelvesAPI.Helpers
                 List<Ocjena> ocjene = db.Ocjenas.Where(x => x.KorisnikID == item.Key).ToList();
                 foreach (Ocjena o in ocjene)
                 {
-                     if(o.OcjenaIznos > 0 && db.Ocjenas.Where(z => z.Id == o.Id && o.KorisnikID == korisnikId).Count() == 0)
+                     if(o.OcjenaIznos >= 3 && db.Ocjenas.Where(z => z.KnjigaID == o.KnjigaID && z.KorisnikID == korisnikId).Count() == 0)
                         preporuceneKnjige.Add(db.Knjigas.Where(x => x.Id == o.KnjigaID).First());
                 }
             }
@@ -105,6 +107,9 @@ namespace eShelvesAPI.Helpers
             double slicnost = brojnik / (Math.Sqrt(sumakvadrata1) * Math.Sqrt(sumakvadrata2));
             return slicnost;
         }
+
+
+        //----------------------------- dio ispod je onaj algoritam za item based preporuku, njega nisam koristio
 
         //Funkcija koja se poziva iz mobilnog dijela aplikacije
         public List<Knjiga> GetSlicneKnjige(int knjigaId)

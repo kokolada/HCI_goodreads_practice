@@ -83,7 +83,7 @@ namespace eShelvesAPI.Controllers
             List<int> ListaPrijatelja = db.Prijateljstvos.Where(x => x.Korisnik1ID == userid).Select(s => s.Korisnik2ID).ToList();
 
             defaultViewModel.Feed = new HubPageViewModel.FeedInfo();
-            defaultViewModel.Feed.FeedItems = db.TimelineItems.Where(g => ListaPrijatelja.All(l => l == g.Id)).Select(t => new HubPageViewModel.FeedInfo.FeedItemInfo
+            defaultViewModel.Feed.FeedItems = db.TimelineItems.OrderByDescending(r => r.EventDate).Where(g => ListaPrijatelja.Contains(g.KorisnikID)).Select(t => new HubPageViewModel.FeedInfo.FeedItemInfo
             {
                 EventDescription = t.Korisnik.username + t.EventDescription + " " + t.Knjiga.Ocjenas.Where(o => o.KnjigaID == t.KnjigaID && o.KorisnikID == t.KorisnikID).FirstOrDefault().OcjenaIznos,
                 FeedItemID = t.Id,
