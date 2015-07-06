@@ -16,6 +16,7 @@ namespace eShelvesAPI.ViewModels
         public float? ProsjecnaOcjena { get; set; }
         public int? OcjenaLogiranogKorisnika { get; set; }
         public byte[] Slika { get; set; }
+        public string Kategorije { get; set; }
 
         public bool IsInPolica { get; set; }
         public int? PolicaID { get; set; }
