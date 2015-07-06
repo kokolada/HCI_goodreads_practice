@@ -211,7 +211,7 @@ namespace eShelvesAPI.Controllers
 
                 TimelineItem t = new TimelineItem();
                 t.EventDate = DateTime.Now;
-                t.EventDescription = " je ocjenio ";
+                t.EventDescription = " je ocjenio";
                 t.IsOcjena = true;
                 t.KnjigaID = o.KnjigaID;
                 t.KorisnikID = o.KorisnikID;

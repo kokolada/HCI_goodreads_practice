@@ -38,6 +38,16 @@ namespace eShelvesAPI.Controllers
 
             db.SaveChanges();
 
+            TimelineItem t = new TimelineItem();
+            t.EventDate = DateTime.Now;
+            t.EventDescription = " je dodao u policu";
+            t.IsOcjena = false;
+            t.KnjigaID = k.Id;
+            t.KorisnikID = p.KorisnikID;
+
+            db.TimelineItems.Add(t);
+            db.SaveChanges();
+
             return true;
         }
 
