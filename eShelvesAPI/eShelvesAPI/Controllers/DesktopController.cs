@@ -55,7 +55,7 @@ namespace eShelvesAPI.Controllers
         [Route("api/Desktop/Kategorijas")]
         public List<Kategorija> GetKategorijas()
         {
-            return db.Kategorijas.ToList();
+            return db.Kategorijas.Include("Autors").Include("Knjigas").Where(x => x.Autors.Count == 0 && x.Knjigas.Count == 0).ToList();
         }
 
         [HttpGet]
