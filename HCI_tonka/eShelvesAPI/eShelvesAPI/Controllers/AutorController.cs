@@ -1,5 +1,6 @@
 ﻿using eShelvesAPI.DAL;
 using eShelvesAPI.Models;
+using eShelvesAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,16 +25,29 @@ namespace eShelvesAPI.Controllers
         }
 
         [HttpGet]
-        public Autor GetAutor(int id)
+        public AutorVMM GetAutor(int id)
         {
-            return db.Autors.Find(id);
+            AutorVM a = new AutorVM();
+            return db.Autors.Where(x => x.Id == id).Select(s => new AutorVMM 
+            {
+                Id = s.Id,
+                Ime = s.Ime,
+                Kategorijas = s.Kategorijas,
+                MjestoRodjenja = s.MjestoRodjenja,
+                Opis = s.Opis,
+                Prezime = s.Prezime,
+                Rodjen = s.Rodjen,
+                Umro = s.Umro,
+                WebStranica = s.WebStranica
+            }).FirstOrDefault();
         }
 
         [HttpGet]
         [Route("api/Autor/Search/{query?}")]
         public List<Autor> GetAutorsByName(string query)
         {
-            return db.Autors.Where(x => (x.Ime + " " + x.Prezime).Contains(query) || query=="").ToList();
+            var tokens = query.Split(' ');
+            return db.Autors.Where(x => tokens.All(t => (x.Ime + " " + x.Prezime).Contains(t))).ToList();
         }
 
         [HttpGet]
@@ -82,6 +96,7 @@ namespace eShelvesAPI.Controllers
                 {
                     ctx.usp_addAutorKategorija(kat.Id, stari.Id);
                 }
+                db.SaveChanges();
             }
             else
             {

@@ -102,7 +102,7 @@ namespace eShelvesAPI.Controllers
         [Route("api/PhoneKnjigaDetalji/{id}/{userid}")]
         public KnjigaDetaljiViewModel GetDetalji(int id, int userid)
         {
-            KnjigaDetaljiViewModel kdvm = db.Knjigas.Where(x => x.Id == id).Select(z => new KnjigaDetaljiViewModel
+            KnjigaDetaljiViewModel kdvm = db.Knjigas.Include("Kategorijas").Where(x => x.Id == id).Select(z => new KnjigaDetaljiViewModel
             {
                 KnjigaID = z.Id,
                 Naslov = z.Naslov,
@@ -127,6 +127,9 @@ namespace eShelvesAPI.Controllers
 
             if (kdvm.IsInPolica)
                 kdvm.PolicaID = db.Policas.Where(p => p.KorisnikID == userid && p.Knjigas.Where(k => k.Id == kdvm.KnjigaID).Count() > 0).FirstOrDefault().Id;
+
+            List<Kategorija> local = db.Knjigas.Include("Kategorijas").Where(x => x.Id == id).Select(g => g.Kategorijas).FirstOrDefault();
+            kdvm.Kategorije = String.Join(",", local.Select(l => l.Naziv).ToArray());
 
             return kdvm;
         }
